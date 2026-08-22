@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
 import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
+import { motion } from 'framer-motion';
 
 export default function LoginPage() {
   const router = useRouter();
@@ -38,7 +39,12 @@ export default function LoginPage() {
   return (
     <main className="min-h-screen flex bg-white">
       {/* Left side: Image */}
-      <div className="hidden lg:block lg:w-1/2 relative bg-stone-900">
+      <motion.div 
+        initial={{ opacity: 0, x: -50 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+        className="hidden lg:block lg:w-1/2 relative bg-stone-900"
+      >
         <img 
           src="/images/sofa_living.jpg"
           alt="Elegant Furniture" 
@@ -46,14 +52,33 @@ export default function LoginPage() {
         />
         <div className="absolute inset-0 bg-gradient-to-t from-stone-900/90 via-stone-900/40 to-transparent" />
         <div className="absolute inset-0 flex flex-col justify-end p-12 lg:p-20 text-white">
-           <h2 className="text-4xl lg:text-5xl font-serif mb-4 leading-tight">Welcome Back to Furniro</h2>
-           <p className="text-lg text-stone-200 max-w-md">Discover premium, distinctly Indian furniture crafted for the modern home.</p>
+           <motion.h2 
+             initial={{ opacity: 0, y: 20 }}
+             animate={{ opacity: 1, y: 0 }}
+             transition={{ duration: 0.6, delay: 0.4 }}
+             className="text-4xl lg:text-5xl font-serif mb-4 leading-tight"
+           >
+             Welcome Back to Furniro
+           </motion.h2>
+           <motion.p 
+             initial={{ opacity: 0, y: 20 }}
+             animate={{ opacity: 1, y: 0 }}
+             transition={{ duration: 0.6, delay: 0.5 }}
+             className="text-lg text-stone-200 max-w-md"
+           >
+             Discover premium, distinctly Indian furniture crafted for the modern home.
+           </motion.p>
         </div>
-      </div>
+      </motion.div>
 
       {/* Right side: Form */}
-      <div className="w-full lg:w-1/2 flex items-center justify-center p-4 sm:p-12 bg-[#f8f7f5] lg:bg-white relative">
-        <div className="w-full max-w-md bg-white p-8 rounded-2xl shadow-xl lg:shadow-none lg:border-none border border-stone-100">
+      <div className="w-full lg:w-1/2 flex items-center justify-center p-4 sm:p-12 bg-[#f8f7f5] lg:bg-white relative overflow-y-auto">
+        <motion.div 
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
+          className="w-full max-w-md bg-white p-8 rounded-2xl shadow-xl lg:shadow-none lg:border-none border border-stone-100 my-8"
+        >
         <Link href="/" className="inline-flex items-center text-sm font-medium text-stone-500 hover:text-orange-600 mb-6 transition-colors">
           <ArrowLeft className="w-4 h-4 mr-2" />
           Back to Home
@@ -100,19 +125,20 @@ export default function LoginPage() {
             <a href="#" className="text-sm font-medium text-orange-600 hover:underline">Forgot Password?</a>
           </div>
 
-          <button 
+          <motion.button 
+            whileTap={{ scale: 0.98 }}
             type="submit" 
             disabled={isLoading}
             className="w-full py-3.5 bg-stone-900 hover:bg-stone-800 text-white font-bold rounded-lg shadow-md transition-colors disabled:opacity-70 disabled:cursor-not-allowed"
           >
             {isLoading ? 'Signing in...' : 'Sign In'}
-          </button>
+          </motion.button>
         </form>
 
         <p className="text-center text-sm text-stone-600 mt-8">
           Don't have an account? <Link href="/register" className="font-bold text-orange-600 hover:underline">Sign Up</Link>
         </p>
-      </div>
+      </motion.div>
       </div>
     </main>
   );
