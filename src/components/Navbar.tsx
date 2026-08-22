@@ -106,20 +106,32 @@ export default function Navbar() {
         {/* Top Utility Bar */}
         <div className="hidden md:flex bg-[#f8f7f5] text-stone-600 text-xs py-2 px-4 sm:px-8 border-b border-stone-200 justify-between items-center">
           <div className="flex gap-6">
-            <Link href="/furniture" className="hover:text-orange-600 transition-colors">Furniture</Link>
-            <Link href="/home-interiors" className="hover:text-orange-600 transition-colors">Home Interiors</Link>
-            <Link href="/bulk-order" className="hover:text-orange-600 transition-colors">Bulk Order</Link>
+            <motion.div whileTap={{ scale: 0.95 }}>
+              <Link href="/furniture" className="hover:text-orange-600 transition-colors block">Furniture</Link>
+            </motion.div>
+            <motion.div whileTap={{ scale: 0.95 }}>
+              <Link href="/home-interiors" className="hover:text-orange-600 transition-colors block">Home Interiors</Link>
+            </motion.div>
+            <motion.div whileTap={{ scale: 0.95 }}>
+              <Link href="/bulk-order" className="hover:text-orange-600 transition-colors block">Bulk Order</Link>
+            </motion.div>
           </div>
           <div className="flex gap-6 items-center">
-            <Link href="#" className="flex items-center gap-1 hover:text-orange-600 transition-colors">
-              <Phone className="w-3 h-3" /> +91-9314444747
-            </Link>
-            <Link href="/track-order" className="flex items-center gap-1 hover:text-orange-600 transition-colors">
-              <Truck className="w-3 h-3" /> Track Order
-            </Link>
-            <Link href="#" className="flex items-center gap-1 hover:text-orange-600 transition-colors">
-              <HelpCircle className="w-3 h-3" /> Help Center
-            </Link>
+            <motion.div whileTap={{ scale: 0.95 }}>
+              <Link href="#" className="flex items-center gap-1 hover:text-orange-600 transition-colors">
+                <Phone className="w-3 h-3" /> +91-9314444747
+              </Link>
+            </motion.div>
+            <motion.div whileTap={{ scale: 0.95 }}>
+              <Link href="/track-order" className="flex items-center gap-1 hover:text-orange-600 transition-colors">
+                <Truck className="w-3 h-3" /> Track Order
+              </Link>
+            </motion.div>
+            <motion.div whileTap={{ scale: 0.95 }}>
+              <Link href="#" className="flex items-center gap-1 hover:text-orange-600 transition-colors">
+                <HelpCircle className="w-3 h-3" /> Help Center
+              </Link>
+            </motion.div>
           </div>
         </div>
 
