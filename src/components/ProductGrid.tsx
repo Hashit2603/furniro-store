@@ -308,13 +308,7 @@ export default function ProductGrid() {
                     </div>
 
                     <div className="grid grid-cols-2 gap-4">
-                      <div className="flex items-start gap-3 p-3 bg-stone-50 rounded-lg">
-                        <Truck className="w-5 h-5 text-orange-600 mt-0.5" />
-                        <div>
-                          <p className="text-xs font-bold text-stone-900">Free Delivery</p>
-                          <p className="text-[10px] text-stone-500 mt-0.5">Ships in 3-5 days</p>
-                        </div>
-                      </div>
+
                       <div className="flex items-start gap-3 p-3 bg-stone-50 rounded-lg">
                         <Shield className="w-5 h-5 text-orange-600 mt-0.5" />
                         <div>
