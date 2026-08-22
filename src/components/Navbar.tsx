@@ -128,7 +128,7 @@ export default function Navbar() {
               </Link>
             </motion.div>
             <motion.div whileTap={{ scale: 0.95 }}>
-              <Link href="#" className="flex items-center gap-1 hover:text-orange-600 transition-colors">
+              <Link href="/help-center" className="flex items-center gap-1 hover:text-orange-600 transition-colors">
                 <HelpCircle className="w-3 h-3" /> Help Center
               </Link>
             </motion.div>

@@ -35,7 +35,7 @@ export default function BulkOrderPage() {
               </div>
               <div>
                 <h3 className="text-lg font-bold text-stone-900 mb-1">Dedicated Account Manager</h3>
-                <p className="text-stone-500 text-sm">You'll have a single point of contact from quotation to final delivery and installation.</p>
+                <p className="text-stone-500 text-sm">You&apos;ll have a single point of contact from quotation to final delivery and installation.</p>
               </div>
             </div>
             

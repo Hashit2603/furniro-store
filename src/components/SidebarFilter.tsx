@@ -85,7 +85,7 @@ export default function SidebarFilter() {
         <ul className="space-y-2 text-[13px] text-stone-700 mb-4">
           <li className="cursor-pointer hover:text-orange-600">All Discounts</li>
           <li className="cursor-pointer hover:text-orange-600">Buy More, Save More</li>
-          <li className="cursor-pointer hover:text-orange-600">Today's Deals</li>
+          <li className="cursor-pointer hover:text-orange-600">Today&apos;s Deals</li>
         </ul>
       </FilterSection>
 
