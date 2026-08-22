@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, Variants } from 'framer-motion';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import FurnitureCanvas from './FurnitureCanvas';
 
@@ -71,7 +71,7 @@ export default function HeroCarousel() {
     return () => clearInterval(timer);
   }, []);
 
-  const slideVariants = {
+  const slideVariants: Variants = {
     enter: (dir: number) => ({
       x: dir > 0 ? 100 : -100,
       opacity: 0,
