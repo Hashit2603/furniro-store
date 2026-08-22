@@ -25,7 +25,9 @@ const FilterSection = ({ title, children, showSeeMore = false }: { title: string
 );
 
 export default function SidebarFilter() {
-  const [priceRange, setPriceRange] = useState(50000);
+  const [minPrice, setMinPrice] = useState(5000);
+  const [maxPrice, setMaxPrice] = useState(300000);
+  const MAX_PRICE = 300000;
 
   return (
     <div className="w-full bg-white pr-4 hidden md:block">
@@ -63,20 +65,82 @@ export default function SidebarFilter() {
 
       {/* Price */}
       <FilterSection title="Price">
-        <div className="text-[13px] text-stone-700 mb-3">₹5,000 - ₹3,00,000+</div>
-        
-        {/* Slider Mockup */}
-        <div className="relative h-1 bg-stone-200 rounded-full mb-6">
-          <div className="absolute top-0 left-0 h-full bg-orange-600 rounded-full w-2/3"></div>
-          <div className="absolute top-1/2 -translate-y-1/2 left-0 w-4 h-4 bg-white border-2 border-orange-600 rounded-full cursor-pointer shadow-sm"></div>
-          <div className="absolute top-1/2 -translate-y-1/2 left-2/3 w-4 h-4 bg-white border-2 border-orange-600 rounded-full cursor-pointer shadow-sm"></div>
+        <div className="text-[13px] text-stone-700 mb-4 font-medium">
+          ₹{minPrice.toLocaleString('en-IN')} - {maxPrice >= MAX_PRICE ? `₹${MAX_PRICE.toLocaleString('en-IN')}+` : `₹${maxPrice.toLocaleString('en-IN')}`}
         </div>
+        
+        {/* Interactive Dual Slider */}
+        <div className="relative h-1 bg-stone-200 rounded-full mb-8 mt-2">
+          {/* Active Range Track */}
+          <div 
+            className="absolute top-0 h-full bg-orange-600 rounded-full pointer-events-none"
+            style={{ 
+              left: `${(minPrice / MAX_PRICE) * 100}%`, 
+              right: `${100 - (maxPrice / MAX_PRICE) * 100}%` 
+            }}
+          />
+          
+          <input 
+            type="range" 
+            min="0" max={MAX_PRICE} step="1000"
+            value={minPrice} 
+            onChange={(e) => setMinPrice(Math.min(Number(e.target.value), maxPrice - 5000))}
+            className="price-slider absolute top-1/2 -translate-y-1/2 w-full m-0"
+            style={{ zIndex: minPrice > MAX_PRICE - 20000 ? 5 : 3 }}
+          />
+          <input 
+            type="range" 
+            min="0" max={MAX_PRICE} step="1000"
+            value={maxPrice} 
+            onChange={(e) => setMaxPrice(Math.max(Number(e.target.value), minPrice + 5000))}
+            className="price-slider absolute top-1/2 -translate-y-1/2 w-full m-0"
+            style={{ zIndex: 4 }}
+          />
+        </div>
+        
+        <style dangerouslySetInnerHTML={{__html: `
+          .price-slider {
+            -webkit-appearance: none;
+            appearance: none;
+            background: transparent;
+            pointer-events: none;
+            outline: none;
+          }
+          .price-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            pointer-events: auto;
+            width: 16px;
+            height: 16px;
+            background: white;
+            border: 2px solid #ea580c;
+            border-radius: 50%;
+            cursor: grab;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+          }
+          .price-slider::-webkit-slider-thumb:active {
+            cursor: grabbing;
+          }
+          .price-slider::-moz-range-thumb {
+            pointer-events: auto;
+            width: 16px;
+            height: 16px;
+            background: white;
+            border: 2px solid #ea580c;
+            border-radius: 50%;
+            cursor: grab;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+          }
+          .price-slider::-moz-range-thumb:active {
+            cursor: grabbing;
+          }
+        `}} />
 
         <ul className="space-y-2 text-[13px] text-stone-700">
-          <li className="cursor-pointer hover:text-orange-600">Up to ₹10,000</li>
-          <li className="cursor-pointer hover:text-orange-600">₹10,000 - ₹25,000</li>
-          <li className="cursor-pointer hover:text-orange-600">₹25,000 - ₹50,000</li>
-          <li className="cursor-pointer hover:text-orange-600">Over ₹50,000</li>
+          <li className="cursor-pointer hover:text-orange-600" onClick={() => { setMinPrice(0); setMaxPrice(10000); }}>Up to ₹10,000</li>
+          <li className="cursor-pointer hover:text-orange-600" onClick={() => { setMinPrice(10000); setMaxPrice(25000); }}>₹10,000 - ₹25,000</li>
+          <li className="cursor-pointer hover:text-orange-600" onClick={() => { setMinPrice(25000); setMaxPrice(50000); }}>₹25,000 - ₹50,000</li>
+          <li className="cursor-pointer hover:text-orange-600" onClick={() => { setMinPrice(50000); setMaxPrice(MAX_PRICE); }}>Over ₹50,000</li>
         </ul>
       </FilterSection>
       
