@@ -142,7 +142,9 @@ export default function Navbar() {
               </button>
               {/* Profile Dropdown */}
               <div className="relative group">
-                <button 
+                <motion.button 
+                  whileTap={{ scale: 0.85 }}
+                  whileHover={{ scale: 1.05 }}
                   onClick={() => {
                     if (!session) {
                       router.push('/login');
@@ -152,7 +154,7 @@ export default function Navbar() {
                 >
                   <User className="w-5 h-5 group-hover:scale-110 transition-transform" />
                   <span className="hidden sm:block text-[10px] font-medium">{session ? session.user?.name || 'Profile' : 'Sign In'}</span>
-                </button>
+                </motion.button>
                 
                 {session && (
                   <div className="absolute top-full right-0 mt-2 w-48 bg-white border border-stone-200 shadow-xl rounded-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50 overflow-hidden">
@@ -173,7 +175,9 @@ export default function Navbar() {
                   </div>
                 )}
               </div>
-              <button 
+              <motion.button 
+                whileTap={{ scale: 0.85 }}
+                whileHover={{ scale: 1.05 }}
                 onClick={toggleWishlist}
                 className="flex flex-col items-center gap-1 text-stone-600 hover:text-orange-600 transition-colors group relative"
               >
@@ -182,8 +186,10 @@ export default function Navbar() {
                 <span className="absolute -top-1 right-1 w-4 h-4 bg-orange-600 text-white text-[9px] flex items-center justify-center rounded-full">
                   {wishlistItems.length}
                 </span>
-              </button>
-              <button 
+              </motion.button>
+              <motion.button 
+                whileTap={{ scale: 0.85 }}
+                whileHover={{ scale: 1.05 }}
                 onClick={toggleCart}
                 className="flex flex-col items-center gap-1 text-stone-600 hover:text-orange-600 transition-colors group relative"
               >
@@ -194,7 +200,7 @@ export default function Navbar() {
                     {cartTotalCount}
                   </span>
                 )}
-              </button>
+              </motion.button>
             </div>
           </div>
         </div>
