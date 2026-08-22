@@ -111,15 +111,15 @@ export default function Navbar() {
             <Link href="/bulk-order" className="hover:text-orange-600 transition-colors">Bulk Order</Link>
           </div>
           <div className="flex gap-6 items-center">
-            <a href="#" className="flex items-center gap-1 hover:text-orange-600 transition-colors">
+            <Link href="#" className="flex items-center gap-1 hover:text-orange-600 transition-colors">
               <Phone className="w-3 h-3" /> +91-9314444747
-            </a>
+            </Link>
             <Link href="/track-order" className="flex items-center gap-1 hover:text-orange-600 transition-colors">
               <Truck className="w-3 h-3" /> Track Order
             </Link>
-            <a href="#" className="flex items-center gap-1 hover:text-orange-600 transition-colors">
+            <Link href="#" className="flex items-center gap-1 hover:text-orange-600 transition-colors">
               <HelpCircle className="w-3 h-3" /> Help Center
-            </a>
+            </Link>
           </div>
         </div>
 
@@ -127,9 +127,9 @@ export default function Navbar() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-20">
             {/* Logo */}
-            <a href="/" className="flex items-center gap-2 cursor-pointer" onClick={handleLogoClick}>
+            <Link href="/" className="flex items-center gap-2 cursor-pointer" onClick={handleLogoClick}>
               <span className="font-bold text-3xl tracking-tight text-stone-900">Furniro</span>
-            </a>
+            </Link>
 
             {/* Search Bar */}
             <div ref={searchContainerRef} className="hidden md:flex flex-1 max-w-2xl mx-12 relative z-[60]">
@@ -209,7 +209,7 @@ export default function Navbar() {
                           ))
                         ) : (
                           <div className="px-4 py-3 text-sm text-stone-500">
-                            No results found for "{searchQuery}"
+                            No results found for &quot;{searchQuery}&quot;
                           </div>
                         )}
                       </div>

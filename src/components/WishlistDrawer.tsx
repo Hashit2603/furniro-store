@@ -21,7 +21,7 @@ export default function WishlistDrawer() {
     };
   }, [isWishlistOpen]);
 
-  const handleMoveToCart = (item: any) => {
+  const handleMoveToCart = (item: { id: number; title: string; price: string; originalPrice?: string; imageUrl: string }) => {
     addToCart(item);
     removeFromWishlist(item.id);
   };

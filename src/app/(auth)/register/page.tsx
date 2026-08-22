@@ -33,7 +33,7 @@ export default function RegisterPage() {
       }
 
       router.push('/login');
-    } catch (err: any) {
+    } catch (err: any) { // eslint-disable-line @typescript-eslint/no-explicit-any
       setError(err.message);
       setIsLoading(false);
     }

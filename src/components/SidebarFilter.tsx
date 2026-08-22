@@ -3,29 +3,29 @@
 import React, { useState } from 'react';
 import { ChevronDown, Star } from 'lucide-react';
 
+const CheckboxItem = ({ label }: { label: string }) => (
+  <label className="flex items-center gap-2 cursor-pointer group mb-2.5">
+    <div className="w-4 h-4 border border-stone-300 rounded-[3px] bg-white group-hover:border-orange-500 flex items-center justify-center transition-colors">
+      {/* Checked state would go here, omitting for pure UI mockup */}
+    </div>
+    <span className="text-[13px] text-stone-700">{label}</span>
+  </label>
+);
+
+const FilterSection = ({ title, children, showSeeMore = false }: { title: string, children: React.ReactNode, showSeeMore?: boolean }) => (
+  <div className="mb-6">
+    <h3 className="text-sm font-bold text-stone-900 mb-3">{title}</h3>
+    {children}
+    {showSeeMore && (
+      <button className="text-[13px] text-orange-600 hover:text-orange-700 hover:underline flex items-center gap-1 mt-1">
+        <ChevronDown className="w-3 h-3" /> See more
+      </button>
+    )}
+  </div>
+);
+
 export default function SidebarFilter() {
   const [priceRange, setPriceRange] = useState(50000);
-
-  const CheckboxItem = ({ label }: { label: string }) => (
-    <label className="flex items-center gap-2 cursor-pointer group mb-2.5">
-      <div className="w-4 h-4 border border-stone-300 rounded-[3px] bg-white group-hover:border-orange-500 flex items-center justify-center transition-colors">
-        {/* Checked state would go here, omitting for pure UI mockup */}
-      </div>
-      <span className="text-[13px] text-stone-700">{label}</span>
-    </label>
-  );
-
-  const FilterSection = ({ title, children, showSeeMore = false }: { title: string, children: React.ReactNode, showSeeMore?: boolean }) => (
-    <div className="mb-6">
-      <h3 className="text-sm font-bold text-stone-900 mb-3">{title}</h3>
-      {children}
-      {showSeeMore && (
-        <button className="text-[13px] text-orange-600 hover:text-orange-700 hover:underline flex items-center gap-1 mt-1">
-          <ChevronDown className="w-3 h-3" /> See more
-        </button>
-      )}
-    </div>
-  );
 
   return (
     <div className="w-full bg-white pr-4 hidden md:block">

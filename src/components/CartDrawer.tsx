@@ -66,7 +66,7 @@ export default function CartDrawer() {
                   </div>
                   <div>
                     <p className="font-medium text-stone-900">Your cart is empty</p>
-                    <p className="text-sm text-stone-500 mt-1">Looks like you haven't added any furniture yet.</p>
+                    <p className="text-sm text-stone-500 mt-1">Looks like you haven&apos;t added any furniture yet.</p>
                   </div>
                   <button 
                     onClick={toggleCart}
