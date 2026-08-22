@@ -36,8 +36,24 @@ export default function LoginPage() {
   };
 
   return (
-    <main className="min-h-screen bg-[#f8f7f5] flex items-center justify-center p-4">
-      <div className="w-full max-w-md bg-white p-8 rounded-2xl shadow-xl border border-stone-100">
+    <main className="min-h-screen flex bg-white">
+      {/* Left side: Image */}
+      <div className="hidden lg:block lg:w-1/2 relative bg-stone-900">
+        <img 
+          src="/images/sofa_living.jpg"
+          alt="Elegant Furniture" 
+          className="absolute inset-0 w-full h-full object-cover opacity-80"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-stone-900/90 via-stone-900/40 to-transparent" />
+        <div className="absolute inset-0 flex flex-col justify-end p-12 lg:p-20 text-white">
+           <h2 className="text-4xl lg:text-5xl font-serif mb-4 leading-tight">Welcome Back to Furniro</h2>
+           <p className="text-lg text-stone-200 max-w-md">Discover premium, distinctly Indian furniture crafted for the modern home.</p>
+        </div>
+      </div>
+
+      {/* Right side: Form */}
+      <div className="w-full lg:w-1/2 flex items-center justify-center p-4 sm:p-12 bg-[#f8f7f5] lg:bg-white relative">
+        <div className="w-full max-w-md bg-white p-8 rounded-2xl shadow-xl lg:shadow-none lg:border-none border border-stone-100">
         <Link href="/" className="inline-flex items-center text-sm font-medium text-stone-500 hover:text-orange-600 mb-6 transition-colors">
           <ArrowLeft className="w-4 h-4 mr-2" />
           Back to Home
@@ -96,6 +112,7 @@ export default function LoginPage() {
         <p className="text-center text-sm text-stone-600 mt-8">
           Don't have an account? <Link href="/register" className="font-bold text-orange-600 hover:underline">Sign Up</Link>
         </p>
+      </div>
       </div>
     </main>
   );
