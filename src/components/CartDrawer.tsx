@@ -1,12 +1,23 @@
 "use client";
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { X, Trash2, Plus, Minus, ShoppingBag } from 'lucide-react';
 import { useCart } from '@/context/CartContext';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export default function CartDrawer() {
   const { isCartOpen, toggleCart, cartItems, removeFromCart, updateQuantity, cartSubtotal, cartTotalCount } = useCart();
+
+  useEffect(() => {
+    if (isCartOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isCartOpen]);
 
   return (
     <AnimatePresence>

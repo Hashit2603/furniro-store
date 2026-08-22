@@ -1,6 +1,6 @@
 "use client";
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { X, Trash2, ShoppingCart, Heart } from 'lucide-react';
 import { useWishlist } from '@/context/WishlistContext';
 import { useCart } from '@/context/CartContext';
@@ -9,6 +9,17 @@ import { motion, AnimatePresence } from 'framer-motion';
 export default function WishlistDrawer() {
   const { isWishlistOpen, toggleWishlist, wishlistItems, removeFromWishlist } = useWishlist();
   const { addToCart } = useCart();
+
+  useEffect(() => {
+    if (isWishlistOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isWishlistOpen]);
 
   const handleMoveToCart = (item: any) => {
     addToCart(item);
