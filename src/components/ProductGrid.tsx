@@ -10,6 +10,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { products, Product } from '@/data/products';
 
 
+import SidebarFilter from './SidebarFilter';
+
 export default function ProductGrid() {
   const { addToCart } = useCart();
   const { toggleWishlistItem, isInWishlist } = useWishlist();
@@ -23,30 +25,23 @@ export default function ProductGrid() {
     const currentlyWished = isInWishlist(product.id);
     toggleWishlistItem(product);
     
-    // Only show big heart pop when adding to wishlist (not removing)
     if (!currentlyWished) {
       setAnimatingHeartId(product.id);
-      setTimeout(() => setAnimatingHeartId(null), 800); // clear after animation
+      setTimeout(() => setAnimatingHeartId(null), 800);
     }
   };
 
   const filteredProducts = useMemo(() => {
     let result = products;
-    
-    // Filter by search query if it exists
     if (searchQuery.trim() !== '') {
       const lowerQuery = searchQuery.toLowerCase();
       result = result.filter(p => p.title.toLowerCase().includes(lowerQuery));
-    }
-    // Otherwise filter by active category if it exists
-    else if (activeCategory) {
+    } else if (activeCategory) {
       result = result.filter(p => p.categories.includes(activeCategory));
     }
-    
     return result;
   }, [activeCategory, searchQuery]);
 
-  // Lock body scroll when modal is open
   React.useEffect(() => {
     if (selectedProduct) {
       document.body.style.overflow = 'hidden';
@@ -59,163 +54,174 @@ export default function ProductGrid() {
   return (
     <>
       <section id="product-grid" className="py-12 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center mb-8">
-          <h2 className="text-xl font-bold text-stone-900">
-            {searchQuery 
-              ? `Search Results for "${searchQuery}"` 
-              : activeCategory 
-                ? `${activeCategory} Collection` 
-                : 'Trending Furniture'}
-          </h2>
-          <button 
-            onClick={(e) => {
-              e.preventDefault();
-              document.getElementById('shop-by-category')?.scrollIntoView({ behavior: 'smooth' });
-            }}
-            className="text-sm font-medium text-orange-600 hover:underline cursor-pointer"
-          >
-            View All
-          </button>
-        </div>
-        
-        {filteredProducts.length === 0 ? (
-          <motion.div 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="py-12 text-center bg-stone-50 rounded-lg border border-dashed border-stone-200"
-          >
-            <p className="text-stone-500 font-medium">No products available in this category right now.</p>
-            <button 
-              onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} 
-              className="mt-4 text-orange-600 hover:underline text-sm font-medium"
-            >
-              Explore other categories
-            </button>
-          </motion.div>
-        ) : (
-          <motion.div 
-            initial="hidden"
-            animate="visible"
-            variants={{
-              hidden: { opacity: 0 },
-              visible: {
-                opacity: 1,
-                transition: { staggerChildren: 0.1 }
-              }
-            }}
-            className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-6 gap-y-10"
-          >
-            <AnimatePresence mode="popLayout">
-              {filteredProducts.map((product) => {
-                const isWished = isInWishlist(product.id);
-                
-                return (
-                  <motion.div 
-                    layoutId={`card-${product.id}`}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, scale: 0.9 }}
-                    transition={{ duration: 0.4 }}
-                    key={product.id} 
-                    className="group cursor-pointer flex flex-col"
-                    onClick={() => setSelectedProduct(product)}
-                  >
-                    {/* Image Box */}
-                    <motion.div 
-                      layoutId={`image-container-${product.id}`}
-                      className="relative w-full aspect-[4/3] bg-stone-100 rounded-sm overflow-hidden mb-4"
-                    >
-                      <motion.img 
-                        layoutId={`image-${product.id}`}
-                        src={product.imageUrl} 
-                        alt={product.title}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                      />
-                      {/* Product Badges */}
-                      {product.tag && (
-                        <div className={`absolute top-3 left-3 px-2 py-1 text-[10px] font-bold uppercase tracking-wider z-10 ${
-                          product.tagType === 'brown' 
-                            ? 'bg-[#8b5a2b] text-white' 
-                            : 'bg-white text-stone-900 shadow-sm'
-                        }`}>
-                          {product.tag}
-                        </div>
-                      )}
-                      
-                      {/* Big Heart Overlay Animation */}
-                      <AnimatePresence>
-                        {animatingHeartId === product.id && (
-                          <motion.div 
-                            initial={{ opacity: 0, scale: 0 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            exit={{ opacity: 0, scale: 1.2 }}
-                            transition={{ type: "spring", damping: 12, stiffness: 200 }}
-                            className="absolute inset-0 flex items-center justify-center z-20 pointer-events-none"
-                          >
-                            <Heart className="w-20 h-20 text-white drop-shadow-2xl fill-white" />
-                          </motion.div>
-                        )}
-                      </AnimatePresence>
-
-                      {/* Wishlist Icon */}
-                      <motion.button 
-                        whileTap={{ scale: 0.8 }}
-                        onClick={(e) => handleWishlistClick(e, product)}
-                        className="absolute top-3 right-3 p-1.5 bg-white/80 backdrop-blur-sm rounded-full text-stone-600 hover:text-red-500 hover:bg-white shadow-sm transition-colors z-30"
-                      >
-                        <motion.div
-                          animate={isWished ? { scale: [1, 1.4, 0.9, 1.1, 1] } : { scale: 1 }}
-                          transition={{ duration: 0.4 }}
-                        >
-                          <Heart 
-                            className="w-4 h-4 transition-colors" 
-                            fill={isWished ? "#ef4444" : "none"}
-                            color={isWished ? "#ef4444" : "currentColor"}
-                          />
-                        </motion.div>
-                      </motion.button>
-
-                      {/* Add to Cart Overlay */}
-                      <div 
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          addToCart(product);
-                        }}
-                        className="absolute inset-x-0 bottom-0 bg-orange-600 hover:bg-orange-700 translate-y-full group-hover:translate-y-0 transition-all duration-300 py-3 text-center z-10"
-                      >
-                        <span className="text-sm font-bold text-white tracking-wide">Add to cart</span>
-                      </div>
-                    </motion.div>
+        <div className="flex flex-col md:flex-row gap-8 items-start">
+          
+          {/* Sidebar */}
+          <div className="w-full md:w-56 lg:w-64 shrink-0">
+            <SidebarFilter />
+          </div>
+          
+          {/* Main Product Area */}
+          <div className="flex-1 w-full">
+            <div className="flex justify-between items-center mb-8 border-b border-stone-200 pb-4">
+              <h2 className="text-xl font-bold text-stone-900">
+                {searchQuery 
+                  ? `Search Results for "${searchQuery}"` 
+                  : activeCategory 
+                    ? `${activeCategory} Collection` 
+                    : 'Trending Furniture'}
+              </h2>
+              <button 
+                onClick={(e) => {
+                  e.preventDefault();
+                  document.getElementById('shop-by-category')?.scrollIntoView({ behavior: 'smooth' });
+                }}
+                className="text-sm font-medium text-orange-600 hover:underline cursor-pointer"
+              >
+                View All
+              </button>
+            </div>
+            
+            {filteredProducts.length === 0 ? (
+              <motion.div 
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                className="py-12 text-center bg-stone-50 rounded-lg border border-dashed border-stone-200"
+              >
+                <p className="text-stone-500 font-medium">No products available in this category right now.</p>
+                <button 
+                  onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} 
+                  className="mt-4 text-orange-600 hover:underline text-sm font-medium"
+                >
+                  Explore other categories
+                </button>
+              </motion.div>
+            ) : (
+              <motion.div 
+                initial="hidden"
+                animate="visible"
+                variants={{
+                  hidden: { opacity: 0 },
+                  visible: {
+                    opacity: 1,
+                    transition: { staggerChildren: 0.1 }
+                  }
+                }}
+                className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-10"
+              >
+                <AnimatePresence mode="popLayout">
+                  {filteredProducts.map((product) => {
+                    const isWished = isInWishlist(product.id);
                     
-                    {/* Details */}
-                    <div className="space-y-1.5 flex-grow">
-                      <motion.h3 
-                        layoutId={`title-${product.id}`}
-                        className="text-[13px] font-medium text-stone-800 line-clamp-2 leading-snug"
-                      >
-                        {product.title}
-                      </motion.h3>
+                    return (
                       <motion.div 
-                        layoutId={`price-container-${product.id}`}
-                        className="flex items-center gap-2 pt-1"
+                        layoutId={`card-${product.id}`}
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, scale: 0.9 }}
+                        transition={{ duration: 0.4 }}
+                        key={product.id} 
+                        className="group cursor-pointer flex flex-col"
+                        onClick={() => setSelectedProduct(product)}
                       >
-                        <span className="text-sm font-bold text-stone-900">₹{product.price}</span>
-                        <span className="text-xs text-stone-400 line-through">₹{product.originalPrice}</span>
-                        <span className="text-xs font-semibold text-[#8b5a2b]">Save {product.discount} off</span>
+                        {/* Image Box */}
+                        <motion.div 
+                          layoutId={`image-container-${product.id}`}
+                          className="relative w-full aspect-[4/3] bg-stone-100 rounded-sm overflow-hidden mb-4"
+                        >
+                          <motion.img 
+                            layoutId={`image-${product.id}`}
+                            src={product.imageUrl} 
+                            alt={product.title}
+                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                          />
+                          {/* Product Badges */}
+                          {product.tag && (
+                            <div className={`absolute top-3 left-3 px-2 py-1 text-[10px] font-bold uppercase tracking-wider z-10 ${
+                              product.tagType === 'brown' 
+                                ? 'bg-[#8b5a2b] text-white' 
+                                : 'bg-white text-stone-900 shadow-sm'
+                            }`}>
+                              {product.tag}
+                            </div>
+                          )}
+                          
+                          {/* Big Heart Overlay Animation */}
+                          <AnimatePresence>
+                            {animatingHeartId === product.id && (
+                              <motion.div 
+                                initial={{ opacity: 0, scale: 0 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                exit={{ opacity: 0, scale: 1.2 }}
+                                transition={{ type: "spring", damping: 12, stiffness: 200 }}
+                                className="absolute inset-0 flex items-center justify-center z-20 pointer-events-none"
+                              >
+                                <Heart className="w-20 h-20 text-white drop-shadow-2xl fill-white" />
+                              </motion.div>
+                            )}
+                          </AnimatePresence>
+    
+                          {/* Wishlist Icon */}
+                          <motion.button 
+                            whileTap={{ scale: 0.8 }}
+                            onClick={(e) => handleWishlistClick(e, product)}
+                            className="absolute top-3 right-3 p-1.5 bg-white/80 backdrop-blur-sm rounded-full text-stone-600 hover:text-red-500 hover:bg-white shadow-sm transition-colors z-30"
+                          >
+                            <motion.div
+                              animate={isWished ? { scale: [1, 1.4, 0.9, 1.1, 1] } : { scale: 1 }}
+                              transition={{ duration: 0.4 }}
+                            >
+                              <Heart 
+                                className="w-4 h-4 transition-colors" 
+                                fill={isWished ? "#ef4444" : "none"}
+                                color={isWished ? "#ef4444" : "currentColor"}
+                              />
+                            </motion.div>
+                          </motion.button>
+    
+                          {/* Add to Cart Overlay */}
+                          <div 
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              addToCart(product);
+                            }}
+                            className="absolute inset-x-0 bottom-0 bg-orange-600 hover:bg-orange-700 translate-y-full group-hover:translate-y-0 transition-all duration-300 py-3 text-center z-10"
+                          >
+                            <span className="text-sm font-bold text-white tracking-wide">Add to cart</span>
+                          </div>
+                        </motion.div>
+                        
+                        {/* Details */}
+                        <div className="space-y-1.5 flex-grow">
+                          <motion.h3 
+                            layoutId={`title-${product.id}`}
+                            className="text-[13px] font-medium text-stone-800 line-clamp-2 leading-snug"
+                          >
+                            {product.title}
+                          </motion.h3>
+                          <motion.div 
+                            layoutId={`price-container-${product.id}`}
+                            className="flex items-center gap-2 pt-1"
+                          >
+                            <span className="text-sm font-bold text-stone-900">₹{product.price}</span>
+                            <span className="text-xs text-stone-400 line-through">₹{product.originalPrice}</span>
+                            <span className="text-xs font-semibold text-[#8b5a2b]">Save {product.discount} off</span>
+                          </motion.div>
+                          <motion.p 
+                            layoutId={`offer-${product.id}`}
+                            className="text-[11px] text-[#c26d2b] mt-1"
+                          >
+                            {product.offerText}
+                          </motion.p>
+                        </div>
                       </motion.div>
-                      <motion.p 
-                        layoutId={`offer-${product.id}`}
-                        className="text-[11px] text-[#c26d2b] mt-1"
-                      >
-                        {product.offerText}
-                      </motion.p>
-                    </div>
-                  </motion.div>
-                );
-              })}
-            </AnimatePresence>
-          </motion.div>
-        )}
+                    );
+                  })}
+                </AnimatePresence>
+              </motion.div>
+            )}
+          </div>
+        </div>
       </section>
 
       {/* iOS-Style Expanding Modal */}
