@@ -25,7 +25,7 @@ export default function TrackOrderPage() {
                   type="text" 
                   placeholder="e.g. FUR-12345678"
                   defaultValue="FUR-8991203"
-                  className="w-full px-4 py-3 bg-white border border-stone-300 rounded-lg focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500"
+                  className="w-full px-4 py-3 bg-white border border-stone-300 rounded-lg focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 text-stone-900 placeholder:text-stone-400"
                 />
               </div>
               <div className="flex-1">
@@ -34,7 +34,7 @@ export default function TrackOrderPage() {
                   type="email" 
                   placeholder="you@example.com"
                   defaultValue="hello@example.com"
-                  className="w-full px-4 py-3 bg-white border border-stone-300 rounded-lg focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500"
+                  className="w-full px-4 py-3 bg-white border border-stone-300 rounded-lg focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 text-stone-900 placeholder:text-stone-400"
                 />
               </div>
               <div className="flex items-end">
