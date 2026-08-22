@@ -28,16 +28,28 @@ const IMAGES = [
   '/images/14.jpg'
 ];
 
+const WARDROBE_IMAGES = Array.from({ length: 13 }, (_, i) => `/images/uploaded/wardrobe-${i + 1}.jpg`);
+const KITCHEN_IMAGES = Array.from({ length: 12 }, (_, i) => `/images/uploaded/kitchen-${i + 1}.jpg`);
+
 function getImageForCategory(category: string): string {
   const cat = category.toLowerCase();
+  
+  // Use newly uploaded images for Storage/Wardrobes
+  if (cat.includes('storage') || cat.includes('wardrobe') || cat.includes('shoe')) {
+    return WARDROBE_IMAGES[Math.floor(Math.random() * WARDROBE_IMAGES.length)];
+  }
+  
+  // Use newly uploaded images for Interiors/Decor/Kitchen
+  if (cat.includes('interior') || cat.includes('decor') || cat.includes('kitchen')) {
+    return KITCHEN_IMAGES[Math.floor(Math.random() * KITCHEN_IMAGES.length)];
+  }
+  
   if (cat.includes('living') || cat.includes('sofa') || cat.includes('coffee')) return '/images/sofa_living.jpg';
   if (cat.includes('bed')) return '/images/bedroom.jpg';
   if (cat.includes('mattress')) return '/images/mattress.jpg';
   if (cat.includes('dining')) return '/images/dining.jpg';
-  if (cat.includes('storage') || cat.includes('wardrobe') || cat.includes('shoe')) return '/images/storage.jpg';
   if (cat.includes('study') || cat.includes('office') || cat.includes('book')) return '/images/office.jpg';
   if (cat.includes('outdoor')) return '/images/outdoor.jpg';
-  if (cat.includes('decor') || cat.includes('interior')) return '/images/decor.jpg';
   if (cat.includes('tv')) return '/images/tv.jpg';
   if (cat.includes('recliner') || cat.includes('lounge')) return '/images/recliner.jpg';
   
