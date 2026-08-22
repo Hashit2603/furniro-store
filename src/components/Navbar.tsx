@@ -58,6 +58,25 @@ export default function Navbar() {
     if (e.target.value) setActiveCategory(null);
   };
 
+  const [isSearchFocused, setIsSearchFocused] = useState(false);
+  const searchContainerRef = React.useRef<HTMLDivElement>(null);
+
+  React.useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (searchContainerRef.current && !searchContainerRef.current.contains(event.target as Node)) {
+        setIsSearchFocused(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  const TRENDING_SEARCHES = ['King Size Bed', 'L-Shape Sofa', 'Dining Table 6 Seater', 'Wardrobe', 'Office Chair'];
+  const filteredSuggestions = NAV_CATEGORIES.filter(cat => 
+    cat.toLowerCase().includes(searchQuery.toLowerCase())
+  ).slice(0, 5);
+
+
   return (
     <>
       {/* Cinematic Logo Animation Overlay */}
@@ -113,13 +132,15 @@ export default function Navbar() {
             </a>
 
             {/* Search Bar */}
-            <div className="hidden md:flex flex-1 max-w-2xl mx-12 relative">
+            <div ref={searchContainerRef} className="hidden md:flex flex-1 max-w-2xl mx-12 relative z-[60]">
               <input
                 type="text"
                 value={searchQuery}
                 onChange={handleSearchChange}
+                onFocus={() => setIsSearchFocused(true)}
                 onKeyDown={(e) => {
                   if (e.key === 'Enter') {
+                    setIsSearchFocused(false);
                     document.getElementById('product-grid')?.scrollIntoView({ behavior: 'smooth' });
                   }
                 }}
@@ -127,11 +148,75 @@ export default function Navbar() {
                 className="w-full pl-4 pr-12 py-2.5 bg-white border border-stone-300 rounded-md focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-all text-sm"
               />
               <button 
-                onClick={() => document.getElementById('product-grid')?.scrollIntoView({ behavior: 'smooth' })}
+                onClick={() => {
+                  setIsSearchFocused(false);
+                  document.getElementById('product-grid')?.scrollIntoView({ behavior: 'smooth' });
+                }}
                 className="absolute right-3 top-1/2 -translate-y-1/2 text-stone-400 hover:text-orange-600"
               >
                 <Search className="w-5 h-5" />
               </button>
+
+              {/* Search Suggestions Dropdown */}
+              <AnimatePresence>
+                {isSearchFocused && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 10 }}
+                    transition={{ duration: 0.2 }}
+                    className="absolute top-full left-0 right-0 mt-2 bg-white border border-stone-200 shadow-2xl rounded-xl overflow-hidden py-4 z-[70]"
+                  >
+                    {!searchQuery ? (
+                      <div className="px-4">
+                        <h4 className="text-xs font-bold text-stone-400 uppercase tracking-wider mb-3">Trending Searches</h4>
+                        <div className="flex flex-wrap gap-2">
+                          {TRENDING_SEARCHES.map(term => (
+                            <button
+                              key={term}
+                              onClick={() => {
+                                setSearchQuery(term);
+                                setIsSearchFocused(false);
+                                document.getElementById('product-grid')?.scrollIntoView({ behavior: 'smooth' });
+                              }}
+                              className="px-3 py-1.5 bg-stone-100 hover:bg-orange-100 hover:text-orange-700 text-stone-700 text-sm rounded-full transition-colors flex items-center gap-1.5"
+                            >
+                              <Search className="w-3 h-3 opacity-50" />
+                              {term}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="px-2">
+                        <h4 className="text-xs font-bold text-stone-400 uppercase tracking-wider mb-2 px-2">Suggestions</h4>
+                        {filteredSuggestions.length > 0 ? (
+                          filteredSuggestions.map((cat, i) => (
+                            <button
+                              key={i}
+                              onClick={() => {
+                                setSearchQuery(cat);
+                                setIsSearchFocused(false);
+                                document.getElementById('product-grid')?.scrollIntoView({ behavior: 'smooth' });
+                              }}
+                              className="w-full text-left px-4 py-2.5 hover:bg-stone-50 text-stone-700 text-sm flex items-center gap-3 transition-colors"
+                            >
+                              <Search className="w-4 h-4 text-stone-400" />
+                              <span dangerouslySetInnerHTML={{
+                                __html: cat.replace(new RegExp(`(${searchQuery})`, 'gi'), '<strong class="text-orange-600">$1</strong>')
+                              }} />
+                            </button>
+                          ))
+                        ) : (
+                          <div className="px-4 py-3 text-sm text-stone-500">
+                            No results found for "{searchQuery}"
+                          </div>
+                        )}
+                      </div>
+                    )}
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
 
             {/* Action Icons */}
