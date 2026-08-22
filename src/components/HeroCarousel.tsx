@@ -81,7 +81,7 @@ export default function HeroCarousel() {
       x: 0,
       opacity: 1,
       scale: 1,
-      transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] }
+      transition: { duration: 0.6, ease: "easeOut" }
     },
     exit: (dir: number) => ({
       x: dir < 0 ? 100 : -100,
