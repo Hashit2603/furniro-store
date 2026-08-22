@@ -85,7 +85,7 @@ export default function Navbar() {
 
       <header className="w-full bg-white border-b border-stone-200 sticky top-0 z-50">
         {/* Top Utility Bar */}
-        <div className="bg-[#f8f7f5] text-stone-600 text-xs py-2 px-4 sm:px-8 border-b border-stone-200 flex justify-between items-center">
+        <div className="hidden md:flex bg-[#f8f7f5] text-stone-600 text-xs py-2 px-4 sm:px-8 border-b border-stone-200 justify-between items-center">
           <div className="flex gap-6">
             <Link href="/furniture" className="hover:text-orange-600 transition-colors">Furniture</Link>
             <Link href="/home-interiors" className="hover:text-orange-600 transition-colors">Home Interiors</Link>
@@ -135,10 +135,10 @@ export default function Navbar() {
             </div>
 
             {/* Action Icons */}
-            <div className="flex items-center gap-6">
+            <div className="flex items-center gap-4 md:gap-6">
               <button className="flex flex-col items-center gap-1 text-stone-600 hover:text-orange-600 transition-colors group">
                 <MapPin className="w-5 h-5 group-hover:scale-110 transition-transform" />
-                <span className="text-[10px] font-medium">Stores</span>
+                <span className="hidden sm:block text-[10px] font-medium">Stores</span>
               </button>
               {/* Profile Dropdown */}
               <div className="relative group">
@@ -151,7 +151,7 @@ export default function Navbar() {
                   className="flex flex-col items-center gap-1 text-stone-600 hover:text-orange-600 transition-colors group"
                 >
                   <User className="w-5 h-5 group-hover:scale-110 transition-transform" />
-                  <span className="text-[10px] font-medium">{session ? session.user?.name || 'Profile' : 'Sign In'}</span>
+                  <span className="hidden sm:block text-[10px] font-medium">{session ? session.user?.name || 'Profile' : 'Sign In'}</span>
                 </button>
                 
                 {session && (
@@ -178,7 +178,7 @@ export default function Navbar() {
                 className="flex flex-col items-center gap-1 text-stone-600 hover:text-orange-600 transition-colors group relative"
               >
                 <Heart className="w-5 h-5 group-hover:scale-110 transition-transform" />
-                <span className="text-[10px] font-medium">Wishlist</span>
+                <span className="hidden sm:block text-[10px] font-medium">Wishlist</span>
                 <span className="absolute -top-1 right-1 w-4 h-4 bg-orange-600 text-white text-[9px] flex items-center justify-center rounded-full">
                   {wishlistItems.length}
                 </span>
@@ -188,7 +188,7 @@ export default function Navbar() {
                 className="flex flex-col items-center gap-1 text-stone-600 hover:text-orange-600 transition-colors group relative"
               >
                 <ShoppingCart className="w-5 h-5 group-hover:scale-110 transition-transform" />
-                <span className="text-[10px] font-medium">Cart</span>
+                <span className="hidden sm:block text-[10px] font-medium">Cart</span>
                 {cartTotalCount > 0 && (
                   <span className="absolute -top-1 right-0 w-4 h-4 bg-orange-600 text-white text-[9px] flex items-center justify-center rounded-full">
                     {cartTotalCount}
@@ -201,7 +201,10 @@ export default function Navbar() {
 
         {/* Navigation Links */}
         <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <ul className="flex items-center justify-between py-3 overflow-x-auto no-scrollbar gap-4 text-[13px] font-medium text-stone-600">
+          <ul 
+            className="flex items-center justify-between py-3 overflow-x-auto gap-4 text-[13px] font-medium text-stone-600"
+            style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+          >
             {NAV_CATEGORIES.map(cat => {
               const isActive = activeCategory === cat;
               const isNewArrivals = cat === 'New Arrivals';

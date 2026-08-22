@@ -96,7 +96,7 @@ export default function HeroCarousel() {
       initial={false}
       animate={{ backgroundColor: slides[active].bg }}
       transition={{ duration: 0.8, ease: "easeInOut" }}
-      className="relative rounded-lg overflow-hidden border border-[#e8e3dc] shadow-sm min-h-[450px] md:min-h-[500px] flex items-center"
+      className="relative rounded-lg overflow-hidden border border-[#e8e3dc] shadow-sm min-h-[650px] md:min-h-[500px] flex items-center"
     >
       <AnimatePresence custom={direction} mode="wait">
         <motion.div

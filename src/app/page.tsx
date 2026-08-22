@@ -17,7 +17,7 @@ export default function Home() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.8, duration: 0.5 }}
-          className="mt-6 border border-[#f0c399] bg-white rounded-md p-4 flex flex-col md:flex-row items-center justify-between shadow-sm"
+          className="mt-6 border border-[#f0c399] bg-white rounded-md p-4 flex flex-col md:flex-row items-center justify-between shadow-sm gap-4"
         >
           <div className="flex items-center gap-6">
             <div className="text-center">
