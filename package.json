@@ -4,14 +4,24 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "npx prisma generate && npx prisma db push && next build",
     "start": "next start",
     "lint": "eslint"
   },
   "dependencies": {
+    "@prisma/client": "^7.9.1",
+    "@react-three/drei": "^10.7.8",
+    "@react-three/fiber": "^9.7.0",
+    "@types/three": "^0.185.4",
+    "bcryptjs": "^3.0.3",
+    "framer-motion": "^13.1.1",
+    "lucide-react": "^1.33.0",
     "next": "16.3.2",
+    "next-auth": "^4.24.15",
+    "prisma": "^7.9.1",
     "react": "19.2.8",
-    "react-dom": "19.2.8"
+    "react-dom": "19.2.8",
+    "three": "^0.185.1"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
@@ -22,5 +32,9 @@
     "eslint-config-next": "16.3.2",
     "tailwindcss": "^4",
     "typescript": "^5"
+  },
+  "allowScripts": {
+    "prisma@7.9.1": true,
+    "@prisma/engines@7.9.1": true
   }
 }

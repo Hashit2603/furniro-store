@@ -1,0 +1,228 @@
+"use client";
+
+import React, { useState } from 'react';
+import Link from 'next/link';
+import { useRouter, usePathname } from 'next/navigation';
+import { useSession, signOut } from 'next-auth/react';
+import { Search, MapPin, User, Heart, ShoppingCart, Phone, Truck, HelpCircle } from 'lucide-react';
+import { useCart } from '@/context/CartContext';
+import { useWishlist } from '@/context/WishlistContext';
+import { useCategory } from '@/context/CategoryContext';
+import { motion, AnimatePresence } from 'framer-motion';
+
+const NAV_CATEGORIES = [
+  'Sofas', 'Living', 'Bedroom', 'Mattress', 'Dining', 'Storage', 
+  'Study & Office', 'Outdoor', 'Decor & Furnishing', 'Interiors', 'New Arrivals'
+];
+
+export default function Navbar() {
+  const router = useRouter();
+  const pathname = usePathname();
+  const { data: session } = useSession();
+  const { cartTotalCount, toggleCart } = useCart();
+  const { wishlistItems, toggleWishlist } = useWishlist();
+  const { activeCategory, setActiveCategory, searchQuery, setSearchQuery } = useCategory();
+
+  const [isAnimatingLogo, setIsAnimatingLogo] = useState(false);
+
+  // Clear search when clicking a category
+  const handleCategoryClick = (cat: string | null) => {
+    setActiveCategory(cat);
+    if (cat) setSearchQuery(''); // clear search when navigating to a specific category
+  };
+
+  const handleLogoClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    
+    // 1. Immediately clear categories and scroll to top
+    handleCategoryClick(null);
+    window.scrollTo({ top: 0 }); // instant scroll so it's ready behind the animation
+    
+    // 2. Trigger the overlay animation
+    setIsAnimatingLogo(true);
+    
+    // 3. If we are on another page, navigate to home silently behind the overlay
+    if (pathname !== '/') {
+      router.push('/');
+    }
+    
+    // 4. Hide the overlay after the animation sequence finishes
+    setTimeout(() => {
+      setIsAnimatingLogo(false);
+    }, 800);
+  };
+
+  // Clear category when searching to avoid zero results
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(e.target.value);
+    if (e.target.value) setActiveCategory(null);
+  };
+
+  return (
+    <>
+      {/* Cinematic Logo Animation Overlay */}
+      <AnimatePresence>
+        {isAnimatingLogo && (
+          <motion.div 
+            className="fixed inset-0 z-[100] flex items-center justify-center pointer-events-none overflow-hidden bg-white"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+          >
+            {/* The Furniro Text that zooms massively into the camera */}
+            <motion.div
+              initial={{ scale: 1 }}
+              animate={{ scale: [1, 1, 250] }}
+              transition={{ duration: 0.8, times: [0, 0.2, 1], ease: "easeInOut" }}
+              className="font-bold text-5xl md:text-7xl tracking-tight text-stone-900 relative z-10 origin-center whitespace-nowrap"
+            >
+              Furniro
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      <header className="w-full bg-white border-b border-stone-200 sticky top-0 z-50">
+        {/* Top Utility Bar */}
+        <div className="bg-[#f8f7f5] text-stone-600 text-xs py-2 px-4 sm:px-8 border-b border-stone-200 flex justify-between items-center">
+          <div className="flex gap-6">
+            <Link href="/furniture" className="hover:text-orange-600 transition-colors">Furniture</Link>
+            <Link href="/home-interiors" className="hover:text-orange-600 transition-colors">Home Interiors</Link>
+            <Link href="/bulk-order" className="hover:text-orange-600 transition-colors">Bulk Order</Link>
+          </div>
+          <div className="flex gap-6 items-center">
+            <a href="#" className="flex items-center gap-1 hover:text-orange-600 transition-colors">
+              <Phone className="w-3 h-3" /> +91-9314444747
+            </a>
+            <Link href="/track-order" className="flex items-center gap-1 hover:text-orange-600 transition-colors">
+              <Truck className="w-3 h-3" /> Track Order
+            </Link>
+            <a href="#" className="flex items-center gap-1 hover:text-orange-600 transition-colors">
+              <HelpCircle className="w-3 h-3" /> Help Center
+            </a>
+          </div>
+        </div>
+
+        {/* Main Header */}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center h-20">
+            {/* Logo */}
+            <a href="/" className="flex items-center gap-2 cursor-pointer" onClick={handleLogoClick}>
+              <span className="font-bold text-3xl tracking-tight text-stone-900">Furniro</span>
+            </a>
+
+            {/* Search Bar */}
+            <div className="hidden md:flex flex-1 max-w-2xl mx-12 relative">
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={handleSearchChange}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    document.getElementById('product-grid')?.scrollIntoView({ behavior: 'smooth' });
+                  }
+                }}
+                placeholder="Search Products, Color & More..."
+                className="w-full pl-4 pr-12 py-2.5 bg-white border border-stone-300 rounded-md focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-all text-sm"
+              />
+              <button 
+                onClick={() => document.getElementById('product-grid')?.scrollIntoView({ behavior: 'smooth' })}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-stone-400 hover:text-orange-600"
+              >
+                <Search className="w-5 h-5" />
+              </button>
+            </div>
+
+            {/* Action Icons */}
+            <div className="flex items-center gap-6">
+              <button className="flex flex-col items-center gap-1 text-stone-600 hover:text-orange-600 transition-colors group">
+                <MapPin className="w-5 h-5 group-hover:scale-110 transition-transform" />
+                <span className="text-[10px] font-medium">Stores</span>
+              </button>
+              {/* Profile Dropdown */}
+              <div className="relative group">
+                <button 
+                  onClick={() => {
+                    if (!session) {
+                      router.push('/login');
+                    }
+                  }}
+                  className="flex flex-col items-center gap-1 text-stone-600 hover:text-orange-600 transition-colors group"
+                >
+                  <User className="w-5 h-5 group-hover:scale-110 transition-transform" />
+                  <span className="text-[10px] font-medium">{session ? session.user?.name || 'Profile' : 'Sign In'}</span>
+                </button>
+                
+                {session && (
+                  <div className="absolute top-full right-0 mt-2 w-48 bg-white border border-stone-200 shadow-xl rounded-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50 overflow-hidden">
+                    <div className="p-4 border-b border-stone-100 bg-stone-50">
+                      <p className="text-sm font-bold text-stone-900 truncate">{session.user?.name}</p>
+                      <p className="text-xs text-stone-500 truncate">{session.user?.email}</p>
+                    </div>
+                    <div className="p-2 flex flex-col">
+                      <Link href="/profile" className="px-3 py-2 text-sm text-stone-700 hover:bg-orange-50 hover:text-orange-600 rounded-md transition-colors">My Profile</Link>
+                      <Link href="/orders" className="px-3 py-2 text-sm text-stone-700 hover:bg-orange-50 hover:text-orange-600 rounded-md transition-colors">My Orders</Link>
+                      <button 
+                        onClick={() => signOut()}
+                        className="px-3 py-2 text-sm text-red-600 hover:bg-red-50 text-left rounded-md transition-colors w-full mt-1 border-t border-stone-100 pt-3"
+                      >
+                        Sign Out
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </div>
+              <button 
+                onClick={toggleWishlist}
+                className="flex flex-col items-center gap-1 text-stone-600 hover:text-orange-600 transition-colors group relative"
+              >
+                <Heart className="w-5 h-5 group-hover:scale-110 transition-transform" />
+                <span className="text-[10px] font-medium">Wishlist</span>
+                <span className="absolute -top-1 right-1 w-4 h-4 bg-orange-600 text-white text-[9px] flex items-center justify-center rounded-full">
+                  {wishlistItems.length}
+                </span>
+              </button>
+              <button 
+                onClick={toggleCart}
+                className="flex flex-col items-center gap-1 text-stone-600 hover:text-orange-600 transition-colors group relative"
+              >
+                <ShoppingCart className="w-5 h-5 group-hover:scale-110 transition-transform" />
+                <span className="text-[10px] font-medium">Cart</span>
+                {cartTotalCount > 0 && (
+                  <span className="absolute -top-1 right-0 w-4 h-4 bg-orange-600 text-white text-[9px] flex items-center justify-center rounded-full">
+                    {cartTotalCount}
+                  </span>
+                )}
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* Navigation Links */}
+        <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <ul className="flex items-center justify-between py-3 overflow-x-auto no-scrollbar gap-4 text-[13px] font-medium text-stone-600">
+            {NAV_CATEGORIES.map(cat => {
+              const isActive = activeCategory === cat;
+              const isNewArrivals = cat === 'New Arrivals';
+              
+              return (
+                <li 
+                  key={cat}
+                  onClick={() => handleCategoryClick(cat)}
+                  className={`shrink-0 cursor-pointer transition-colors pb-1 border-b-2 ${
+                    isActive 
+                      ? 'border-orange-600 text-orange-600' 
+                      : `border-transparent ${isNewArrivals ? 'text-orange-500 hover:text-orange-700' : 'hover:text-orange-600 hover:border-orange-600'}`
+                  }`}
+                >
+                  {cat}
+                </li>
+              );
+            })}
+          </ul>
+        </nav>
+      </header>
+    </>
+  );
+}
