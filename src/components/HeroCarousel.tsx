@@ -3,7 +3,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence, Variants } from 'framer-motion';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import FurnitureCanvas from './FurnitureCanvas';
 
 const slides = [
   {
@@ -17,7 +16,8 @@ const slides = [
     title: 'MADE FOR THE WORLD',
     subtitle: 'Premium Sofas & Loungers',
     price: 'Starting From ₹48,999',
-    is3D: true,
+    is3D: false,
+    image: '/images/1.jpg',
   },
   {
     id: 1,
@@ -128,22 +128,16 @@ export default function HeroCarousel() {
             </div>
           </div>
 
-          {/* Right Content (3D or Image) */}
+          {/* Right Content (Image) */}
           <div className="w-full md:w-1/2 h-[300px] md:h-full relative flex items-center justify-center p-4">
-            {slides[active].is3D ? (
-              <div className="w-full h-full max-h-[400px]">
-                <FurnitureCanvas />
-              </div>
-            ) : (
-              <motion.img 
-                initial={{ scale: 1.1, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                transition={{ duration: 0.8 }}
-                src={slides[active].image} 
-                alt="Furniture Collection" 
-                className="w-full h-full object-cover rounded-xl shadow-2xl max-h-[400px]"
-              />
-            )}
+            <motion.img 
+              initial={{ scale: 1.1, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ duration: 0.8 }}
+              src={slides[active].image} 
+              alt="Furniture Collection" 
+              className="w-full h-full object-cover rounded-xl shadow-2xl max-h-[400px]"
+            />
           </div>
         </motion.div>
       </AnimatePresence>
