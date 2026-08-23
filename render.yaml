@@ -17,6 +17,8 @@ services:
           name: furniro-db
           property: connectionString
       - key: NEXTAUTH_SECRET
-        generateValue: true
+        value: 74fcfbba81fe965f51fff977d979c37e
       - key: NEXTAUTH_URL
-        sync: false
+        value: https://furniro-store.onrender.com
+      - key: PORT
+        value: "10000"
