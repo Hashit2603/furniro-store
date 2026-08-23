@@ -64,7 +64,7 @@ export default function CinematicHero() {
     <div ref={containerRef} className="relative h-[100vh] w-full overflow-hidden bg-stone-900 mt-0">
       <img
         ref={bgRef}
-        src="/images/sofa_living.jpg" // Using an existing premium image
+        src="/images/generated/sofa_living_1787317267428.jpg" // Using an existing premium image
         alt="Premium Furniture Showroom"
         className="absolute inset-0 w-full h-full object-cover transform-gpu origin-center"
       />
@@ -93,3 +93,4 @@ export default function CinematicHero() {
     </div>
   );
 }
+
