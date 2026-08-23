@@ -47,7 +47,7 @@ export default function CinematicIntro() {
       >
         <video 
           autoPlay muted playsInline loop
-          poster="/images/generated/sofa_living_1787317267428.jpg"
+          poster="/images/generated/luxury_showroom_doors.jpg"
           className="absolute left-0 top-0 w-[100vw] max-w-[100vw] h-full object-cover"
         >
           <source src="/videos/intro-desktop.mp4" type="video/mp4" />
@@ -69,7 +69,7 @@ export default function CinematicIntro() {
       >
         <video 
           autoPlay muted playsInline loop
-          poster="/images/generated/sofa_living_1787317267428.jpg"
+          poster="/images/generated/luxury_showroom_doors.jpg"
           className="absolute right-0 top-0 w-[100vw] max-w-[100vw] h-full object-cover"
         >
           <source src="/videos/intro-desktop.mp4" type="video/mp4" />
@@ -97,3 +97,4 @@ export default function CinematicIntro() {
     </motion.div>
   );
 }
+
