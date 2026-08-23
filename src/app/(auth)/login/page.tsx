@@ -40,18 +40,18 @@ export default function LoginPage() {
     <main className="min-h-screen flex bg-white">
       {/* Left side: Image */}
       <motion.div 
-        initial={{ opacity: 0, x: -50 }}
-        animate={{ opacity: 1, x: 0 }}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
-        className="hidden lg:block lg:w-1/2 relative bg-stone-900"
+        className="fixed inset-0 lg:relative lg:block lg:w-1/2 bg-stone-900 z-0"
       >
         <img 
-          src="/images/sofa_living.jpg"
+          src="/images/generated/sofa_living_1787317267428.jpg"
           alt="Elegant Furniture" 
-          className="absolute inset-0 w-full h-full object-cover opacity-80"
+          className="absolute inset-0 w-full h-full object-cover opacity-70 lg:opacity-80"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-stone-900/90 via-stone-900/40 to-transparent" />
-        <div className="absolute inset-0 flex flex-col justify-end p-12 lg:p-20 text-white">
+        <div className="absolute inset-0 bg-stone-900/50 lg:bg-gradient-to-t lg:from-stone-900/90 lg:via-stone-900/40 lg:to-transparent" />
+        <div className="hidden lg:flex absolute inset-0 flex-col justify-end p-12 lg:p-20 text-white">
            <motion.h2 
              initial={{ opacity: 0, y: 20 }}
              animate={{ opacity: 1, y: 0 }}
@@ -72,12 +72,12 @@ export default function LoginPage() {
       </motion.div>
 
       {/* Right side: Form */}
-      <div className="w-full lg:w-1/2 flex items-center justify-center p-4 sm:p-12 bg-[#f8f7f5] lg:bg-white relative overflow-y-auto">
+      <div className="w-full lg:w-1/2 flex items-center justify-center p-4 sm:p-12 z-10 lg:bg-white relative overflow-y-auto min-h-screen">
         <motion.div 
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
-          className="w-full max-w-md bg-white p-8 rounded-2xl shadow-xl lg:shadow-none lg:border-none border border-stone-100 my-8"
+          className="w-full max-w-md bg-white/95 backdrop-blur-md lg:bg-white p-8 rounded-3xl shadow-2xl lg:shadow-none lg:border-none border border-white/20 my-8"
         >
         <Link href="/" className="inline-flex items-center text-sm font-medium text-stone-500 hover:text-orange-600 mb-6 transition-colors">
           <ArrowLeft className="w-4 h-4 mr-2" />
@@ -143,3 +143,4 @@ export default function LoginPage() {
     </main>
   );
 }
+
