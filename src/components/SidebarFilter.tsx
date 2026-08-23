@@ -1,16 +1,29 @@
 "use client";
 
 import React from 'react';
-import { ChevronDown, Star } from 'lucide-react';
+import { ChevronDown, Star, Check } from 'lucide-react';
 
-const CheckboxItem = ({ label }: { label: string }) => (
-  <label className="flex items-center gap-2 cursor-pointer group mb-2.5">
-    <div className="w-4 h-4 border border-stone-300 rounded-[3px] bg-white group-hover:border-orange-500 flex items-center justify-center transition-colors">
-      {/* Checked state would go here, omitting for pure UI mockup */}
-    </div>
-    <span className="text-[13px] text-stone-700">{label}</span>
-  </label>
-);
+const CheckboxItem = ({ label }: { label: string }) => {
+  const [checked, setChecked] = React.useState(false);
+  return (
+    <label className="flex items-center gap-2 cursor-pointer group mb-2.5">
+      <input 
+        type="checkbox" 
+        className="hidden" 
+        checked={checked} 
+        onChange={(e) => setChecked(e.target.checked)} 
+      />
+      <div className={`w-4 h-4 border rounded-[3px] flex items-center justify-center transition-colors ${
+        checked 
+          ? "bg-orange-600 border-orange-600" 
+          : "bg-white border-stone-300 group-hover:border-orange-500"
+      }`}>
+        {checked && <Check className="w-3 h-3 text-white" strokeWidth={4} />}
+      </div>
+      <span className="text-[13px] text-stone-700">{label}</span>
+    </label>
+  );
+};
 
 const FilterSection = ({ title, children, showSeeMore = false }: { title: string, children: React.ReactNode, showSeeMore?: boolean }) => (
   <div className="mb-6">
@@ -85,3 +98,4 @@ export default function SidebarFilter() {
     </div>
   );
 }
+
