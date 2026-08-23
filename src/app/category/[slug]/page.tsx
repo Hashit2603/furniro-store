@@ -3,6 +3,8 @@
 import React, { use, useState } from 'react';
 import Link from 'next/link';
 import { ArrowLeft, Heart } from 'lucide-react';
+import Navbar from '@/components/Navbar';
+import Footer from '@/components/Footer';
 import { products, Product } from '@/data/products';
 import { useCart } from '@/context/CartContext';
 import { useWishlist } from '@/context/WishlistContext';
@@ -37,7 +39,7 @@ export default function CategoryPage({ params }: { params: Promise<{ slug: strin
   const categoryProducts = products.filter(p => p.categories.includes(categoryName));
 
   return (
-    <main className="min-h-screen bg-white">
+    <div className="min-h-screen bg-white flex flex-col"><Navbar /><main className="flex-1">
       <div className="bg-[#f8f7f5] py-12 border-b border-stone-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <Link href="/" className="inline-flex items-center text-sm font-medium text-stone-500 hover:text-orange-600 mb-6 transition-colors">
@@ -145,6 +147,7 @@ export default function CategoryPage({ params }: { params: Promise<{ slug: strin
           </div>
         )}
       </section>
-    </main>
+    </main><Footer /></div>
   );
 }
+

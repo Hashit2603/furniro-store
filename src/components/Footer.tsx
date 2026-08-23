@@ -77,9 +77,9 @@ export default function Footer() {
             <ul className="space-y-3 text-sm text-stone-400">
               <li><Link href="/help-center" className="hover:text-orange-500 transition-colors flex items-center gap-2"><ArrowRight className="w-3 h-3" /> Help Center</Link></li>
               <li><Link href="/track-order" className="hover:text-orange-500 transition-colors flex items-center gap-2"><ArrowRight className="w-3 h-3" /> Track Your Order</Link></li>
-              <li><Link href="#" className="hover:text-orange-500 transition-colors flex items-center gap-2"><ArrowRight className="w-3 h-3" /> Returns & Refunds</Link></li>
-              <li><Link href="#" className="hover:text-orange-500 transition-colors flex items-center gap-2"><ArrowRight className="w-3 h-3" /> Shipping Information</Link></li>
-              <li><Link href="#" className="hover:text-orange-500 transition-colors flex items-center gap-2"><ArrowRight className="w-3 h-3" /> Privacy Policy</Link></li>
+              <li><Link href="/returns" className="hover:text-orange-500 transition-colors flex items-center gap-2"><ArrowRight className="w-3 h-3" /> Returns & Refunds</Link></li>
+              <li><Link href="/shipping" className="hover:text-orange-500 transition-colors flex items-center gap-2"><ArrowRight className="w-3 h-3" /> Shipping Information</Link></li>
+              <li><Link href="/privacy" className="hover:text-orange-500 transition-colors flex items-center gap-2"><ArrowRight className="w-3 h-3" /> Privacy Policy</Link></li>
             </ul>
           </div>
 
