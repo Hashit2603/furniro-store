@@ -63,11 +63,11 @@ export default function Footer() {
           <div>
             <h4 className="text-white text-base font-bold mb-6 uppercase tracking-wider">Collections</h4>
             <ul className="space-y-3 text-sm text-stone-400">
-              <li><Link href="#" className="hover:text-orange-500 transition-colors flex items-center gap-2"><ArrowRight className="w-3 h-3" /> Living Room</Link></li>
-              <li><Link href="#" className="hover:text-orange-500 transition-colors flex items-center gap-2"><ArrowRight className="w-3 h-3" /> Bedroom Setup</Link></li>
-              <li><Link href="#" className="hover:text-orange-500 transition-colors flex items-center gap-2"><ArrowRight className="w-3 h-3" /> Dining & Kitchen</Link></li>
-              <li><Link href="#" className="hover:text-orange-500 transition-colors flex items-center gap-2"><ArrowRight className="w-3 h-3" /> Office Furniture</Link></li>
-              <li><Link href="#" className="hover:text-orange-500 transition-colors flex items-center gap-2"><ArrowRight className="w-3 h-3" /> Outdoor Patio</Link></li>
+              <li><Link href="/category/living" className="hover:text-orange-500 transition-colors flex items-center gap-2"><ArrowRight className="w-3 h-3" /> Living Room</Link></li>
+              <li><Link href="/category/bedroom" className="hover:text-orange-500 transition-colors flex items-center gap-2"><ArrowRight className="w-3 h-3" /> Bedroom Setup</Link></li>
+              <li><Link href="/category/dining" className="hover:text-orange-500 transition-colors flex items-center gap-2"><ArrowRight className="w-3 h-3" /> Dining & Kitchen</Link></li>
+              <li><Link href="/category/study-&-office" className="hover:text-orange-500 transition-colors flex items-center gap-2"><ArrowRight className="w-3 h-3" /> Office Furniture</Link></li>
+              <li><Link href="/category/outdoor" className="hover:text-orange-500 transition-colors flex items-center gap-2"><ArrowRight className="w-3 h-3" /> Outdoor Patio</Link></li>
             </ul>
           </div>
 
@@ -136,4 +136,6 @@ export default function Footer() {
     </footer>
   );
 }
+
+
 
