@@ -86,7 +86,7 @@ export default function CinematicShowcase() {
       <div ref={scrollWrapperRef} className="flex h-full w-[300vw]">
         {SHOWCASE_PRODUCTS.map((product, i) => (
           <div key={i} className="showcase-item w-screen h-full flex items-center justify-center p-4 md:p-8 relative">
-            <div className="max-w-6xl w-full grid md:grid-cols-2 gap-8 md:gap-12 items-center">
+            <div className="max-w-6xl w-full grid md:grid-cols-2 gap-6 md:gap-12 items-center mt-12 md:mt-0">
               
               <div className="order-2 md:order-1 flex flex-col items-start px-4 md:px-12">
                 <h3 className="text-4xl md:text-7xl font-serif font-bold mb-4 md:mb-6 leading-tight">{product.name}</h3>
@@ -101,7 +101,7 @@ export default function CinematicShowcase() {
                 </Link>
               </div>
 
-              <div className="order-1 md:order-2 h-[45vh] md:h-[70vh] w-full relative rounded-2xl overflow-hidden shadow-2xl">
+              <div className="order-1 md:order-2 h-[35vh] sm:h-[45vh] md:h-[70vh] w-full relative rounded-2xl overflow-hidden shadow-2xl">
                 <img 
                   src={product.image} 
                   alt={product.name} 
@@ -116,3 +116,4 @@ export default function CinematicShowcase() {
     </section>
   );
 }
+
