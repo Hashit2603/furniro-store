@@ -89,14 +89,19 @@ export default function Navbar() {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
           >
-            {/* The Satguru Industries Text that zooms massively into the camera */}
+            {/* Elegant breathing logo reveal */}
             <motion.div
-              initial={{ scale: 1 }}
-              animate={{ scale: [1, 1, 250] }}
-              transition={{ duration: 0.8, times: [0, 0.2, 1], ease: "easeInOut" }}
-              className="font-bold text-5xl md:text-7xl tracking-tight text-stone-900 relative z-10 origin-center whitespace-nowrap"
+              initial={{ scale: 0.9, opacity: 0, filter: "blur(8px)" }}
+              animate={{ scale: 1.05, opacity: 1, filter: "blur(0px)" }}
+              transition={{ duration: 0.7, ease: "easeOut" }}
+              className="flex flex-col items-center justify-center gap-6 relative z-10"
             >
+              <div className="bg-orange-600 text-white w-24 h-24 rounded-2xl flex items-center justify-center shadow-xl">
+                <span className="font-serif font-bold text-6xl leading-none">S</span>
+              </div>
+              <span className="font-bold text-4xl md:text-5xl tracking-tight text-stone-900">
                 Satguru <span className="text-orange-600">Industries</span>
+              </span>
             </motion.div>
           </motion.div>
         )}
@@ -332,5 +337,6 @@ export default function Navbar() {
     </>
   );
 }
+
 
 
