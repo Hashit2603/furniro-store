@@ -36,7 +36,7 @@ export default function SidebarFilter() {
       
       {/* Brands */}
       <FilterSection title="Brands" showSeeMore>
-        <CheckboxItem label="Furniro" />
+        <CheckboxItem label="Satguru Industries" />
         <CheckboxItem label="Godrej Interio" />
         <CheckboxItem label="Urban Ladder" />
         <CheckboxItem label="WoodenStreet" />

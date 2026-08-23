@@ -89,14 +89,14 @@ export default function Navbar() {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
           >
-            {/* The Furniro Text that zooms massively into the camera */}
+            {/* The Satguru Industries Text that zooms massively into the camera */}
             <motion.div
               initial={{ scale: 1 }}
               animate={{ scale: [1, 1, 250] }}
               transition={{ duration: 0.8, times: [0, 0.2, 1], ease: "easeInOut" }}
               className="font-bold text-5xl md:text-7xl tracking-tight text-stone-900 relative z-10 origin-center whitespace-nowrap"
             >
-              Furniro
+                Satguru <span className="text-orange-600">Industries</span>
             </motion.div>
           </motion.div>
         )}
@@ -140,7 +140,7 @@ export default function Navbar() {
           <div className="flex justify-between items-center h-20">
             {/* Logo */}
             <Link href="/" className="flex items-center gap-2 cursor-pointer" onClick={handleLogoClick}>
-              <span className="font-bold text-3xl tracking-tight text-stone-900">Furniro</span>
+              <div className="bg-orange-600 text-white w-10 h-10 rounded-lg flex items-center justify-center shadow-sm"><span className="font-serif font-bold text-2xl leading-none">S</span></div><span className="font-bold text-2xl tracking-tight text-stone-900">Satguru <span className="text-orange-600">Industries</span></span>
             </Link>
 
             {/* Search Bar */}
@@ -332,3 +332,5 @@ export default function Navbar() {
     </>
   );
 }
+
+

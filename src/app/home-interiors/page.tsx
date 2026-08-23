@@ -12,7 +12,7 @@ export default function HomeInteriorsPage() {
           <div className="grid grid-cols-1 md:grid-cols-2">
             
             <div className="p-12 md:p-16 lg:p-24 flex flex-col justify-center">
-              <span className="text-orange-600 font-bold tracking-wider uppercase text-sm mb-4">Furniro Interiors</span>
+              <span className="text-orange-600 font-bold tracking-wider uppercase text-sm mb-4">Satguru Interiors</span>
               <h1 className="text-4xl md:text-5xl font-serif text-stone-900 mb-6 leading-tight">
                 Transform your home with our experts.
               </h1>

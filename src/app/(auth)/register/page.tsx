@@ -61,7 +61,7 @@ export default function RegisterPage() {
              transition={{ duration: 0.6, delay: 0.4 }}
              className="text-4xl lg:text-5xl font-serif mb-4 leading-tight"
            >
-             Join Furniro Today
+             Join Satguru Industries Today
            </motion.h2>
            <motion.p 
              initial={{ opacity: 0, y: 20 }}
@@ -88,7 +88,7 @@ export default function RegisterPage() {
         </Link>
         
         <h1 className="text-3xl font-serif font-bold text-stone-900 mb-2">Create Account</h1>
-        <p className="text-stone-500 text-sm mb-8">Join Furniro to track orders, save wishlists, and checkout faster.</p>
+        <p className="text-stone-500 text-sm mb-8">Join Satguru Industries to track orders, save wishlists, and checkout faster.</p>
 
         {error && (
           <div className="bg-red-50 text-red-600 p-3 rounded-lg text-sm mb-6 border border-red-100">

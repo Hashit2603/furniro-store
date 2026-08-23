@@ -22,7 +22,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     <div className="min-h-screen bg-stone-100 flex flex-col md:flex-row">
       {/* Mobile Header */}
       <div className="md:hidden bg-stone-900 text-white p-4 flex justify-between items-center z-20">
-        <span className="font-serif font-bold text-xl">Furniro Admin</span>
+        <span className="font-serif font-bold text-xl">Satguru Admin</span>
         <button onClick={() => setIsSidebarOpen(!isSidebarOpen)}>
           {isSidebarOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
         </button>
@@ -37,7 +37,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       >
         <div className="p-6 hidden md:block">
           <Link href="/" className="font-serif font-bold text-2xl text-white hover:text-orange-500 transition-colors">
-            Furniro
+            Satguru Industries
           </Link>
           <span className="block text-xs text-stone-500 mt-1 uppercase tracking-widest font-bold">Admin Panel</span>
         </div>

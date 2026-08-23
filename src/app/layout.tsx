@@ -14,8 +14,8 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    template: '%s | Furniro',
-    default: 'Furniro | Premium Furniture',
+    template: '%s | Satguru Industries',
+    default: 'Satguru Industries | Premium Furniture',
   },
   description: "Discover premium furniture for your living space, bedroom, and office. Shop high-quality sofas, beds, and dining sets.",
 };

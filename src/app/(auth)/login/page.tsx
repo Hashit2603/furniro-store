@@ -58,7 +58,7 @@ export default function LoginPage() {
              transition={{ duration: 0.6, delay: 0.4 }}
              className="text-4xl lg:text-5xl font-serif mb-4 leading-tight"
            >
-             Welcome Back to Furniro
+             Welcome Back to Satguru Industries
            </motion.h2>
            <motion.p 
              initial={{ opacity: 0, y: 20 }}
@@ -85,7 +85,7 @@ export default function LoginPage() {
         </Link>
         
         <h1 className="text-3xl font-serif font-bold text-stone-900 mb-2">Welcome Back</h1>
-        <p className="text-stone-500 text-sm mb-8">Sign in to your Furniro account to manage your orders and wishlist.</p>
+        <p className="text-stone-500 text-sm mb-8">Sign in to your Satguru Industries account to manage your orders and wishlist.</p>
 
         {error && (
           <div className="bg-red-50 text-red-600 p-3 rounded-lg text-sm mb-6 border border-red-100">

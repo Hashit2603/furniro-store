@@ -154,12 +154,12 @@ export default function HelpCenterPage() {
               <motion.a 
                 whileHover={{ y: -5 }}
                 whileTap={{ scale: 0.98 }}
-                href="mailto:support@furniro.com"
+                href="mailto:support@satguruindustries.com"
                 className="flex flex-col items-center justify-center p-6 bg-white rounded-xl border border-stone-200 text-center hover:border-orange-200 hover:shadow-md transition-all group"
               >
                 <Mail className="w-8 h-8 text-stone-400 group-hover:text-orange-600 mb-3 transition-colors" />
                 <span className="font-medium text-stone-900 block mb-1">Email Us</span>
-                <span className="text-xs text-stone-500">support@furniro.com</span>
+                <span className="text-xs text-stone-500">support@satguruindustries.com</span>
               </motion.a>
               
               <motion.a 

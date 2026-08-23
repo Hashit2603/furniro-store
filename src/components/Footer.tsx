@@ -3,7 +3,7 @@ export default function Footer() {
     <footer className="bg-stone-900 text-stone-300 py-12 mt-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-8">
         <div>
-          <h3 className="text-white text-lg font-bold mb-4">Furniro</h3>
+          <div className="flex items-center gap-2 mb-4"><div className="bg-orange-600 text-white w-8 h-8 rounded-lg flex items-center justify-center shadow-sm"><span className="font-serif font-bold text-xl leading-none">S</span></div><h3 className="text-white text-xl font-bold">Satguru <span className="text-orange-500">Industries</span></h3></div>
           <p className="text-sm">Premium furniture for modern homes.</p>
         </div>
         <div>
@@ -32,8 +32,9 @@ export default function Footer() {
         </div>
       </div>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 pt-8 border-t border-stone-800 text-sm text-center">
-        <p>&copy; 2026 Furniro. All rights reverved.</p>
+        <p>&copy; 2026 Satguru Industries. All rights reverved.</p>
       </div>
     </footer>
   );
 }
+
