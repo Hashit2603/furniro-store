@@ -119,7 +119,8 @@ export default function ProductGrid() {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, scale: 0.9 }}
-                        transition={{ duration: 0.4 }}
+                        whileTap={{ scale: 0.96 }}
+                        transition={{ layout: { type: "spring", damping: 25, stiffness: 200 } }}
                         key={product.id} 
                         className="group cursor-pointer flex flex-col"
                         onClick={() => setSelectedProduct(product)}
@@ -348,3 +349,4 @@ export default function ProductGrid() {
     </>
   );
 }
+
