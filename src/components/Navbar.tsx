@@ -108,33 +108,44 @@ export default function Navbar() {
       </AnimatePresence>
 
       <header className="w-full bg-white border-b border-stone-200 sticky top-0 z-50">
-        {/* Top Utility Bar */}
-        <div className="hidden md:flex bg-[#f8f7f5] text-stone-600 text-xs py-2 px-4 sm:px-8 border-b border-stone-200 justify-between items-center">
-          <div className="flex gap-6">
+        {/* Top Premium Utility Bar */}
+        <div className="hidden md:flex bg-stone-900 text-stone-300 text-[11px] font-medium tracking-[0.05em] py-2.5 px-4 sm:px-8 justify-between items-center">
+          <div className="flex items-center gap-6">
             <motion.div whileTap={{ scale: 0.95 }}>
-              <Link href="/furniture" className="hover:text-orange-600 transition-colors block">Furniture</Link>
+              <Link href="/furniture" className="hover:text-white transition-colors flex items-center gap-1.5 uppercase">
+                Furniture
+              </Link>
             </motion.div>
+            <span className="w-px h-3 bg-stone-700"></span>
             <motion.div whileTap={{ scale: 0.95 }}>
-              <Link href="/home-interiors" className="hover:text-orange-600 transition-colors block">Home Interiors</Link>
+              <Link href="/home-interiors" className="hover:text-white transition-colors flex items-center gap-1.5 uppercase">
+                Home Interiors
+              </Link>
             </motion.div>
+            <span className="w-px h-3 bg-stone-700"></span>
             <motion.div whileTap={{ scale: 0.95 }}>
-              <Link href="/bulk-order" className="hover:text-orange-600 transition-colors block">Bulk Order</Link>
+              <Link href="/bulk-order" className="hover:text-white transition-colors flex items-center gap-1.5 uppercase">
+                Bulk Order
+              </Link>
             </motion.div>
           </div>
-          <div className="flex gap-6 items-center">
+          
+          <div className="flex items-center gap-6">
             <motion.div whileTap={{ scale: 0.95 }}>
-              <Link href="#" className="flex items-center gap-1 hover:text-orange-600 transition-colors">
-                <Phone className="w-3 h-3" /> +91-9314444747
+              <a href="tel:+917505036616" className="flex items-center gap-1.5 hover:text-white transition-colors text-orange-500 font-bold tracking-wider">
+                <Phone className="w-3.5 h-3.5" /> +91 7505036616
+              </a>
+            </motion.div>
+            <span className="w-px h-3 bg-stone-700"></span>
+            <motion.div whileTap={{ scale: 0.95 }}>
+              <Link href="/track-order" className="flex items-center gap-1.5 hover:text-white transition-colors uppercase">
+                <Truck className="w-3.5 h-3.5" /> Track Order
               </Link>
             </motion.div>
+            <span className="w-px h-3 bg-stone-700"></span>
             <motion.div whileTap={{ scale: 0.95 }}>
-              <Link href="/track-order" className="flex items-center gap-1 hover:text-orange-600 transition-colors">
-                <Truck className="w-3 h-3" /> Track Order
-              </Link>
-            </motion.div>
-            <motion.div whileTap={{ scale: 0.95 }}>
-              <Link href="/help-center" className="flex items-center gap-1 hover:text-orange-600 transition-colors">
-                <HelpCircle className="w-3 h-3" /> Help Center
+              <Link href="/help-center" className="flex items-center gap-1.5 hover:text-white transition-colors uppercase">
+                <HelpCircle className="w-3.5 h-3.5" /> Help Center
               </Link>
             </motion.div>
           </div>
@@ -337,6 +348,7 @@ export default function Navbar() {
     </>
   );
 }
+
 
 
 
