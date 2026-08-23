@@ -31,7 +31,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       {/* Sidebar */}
       <motion.aside 
         initial={{ x: -300 }}
-        animate={{ x: isSidebarOpen || window.innerWidth >= 768 ? 0 : -300 }}
+        animate={{ x: isSidebarOpen || (typeof window !== "undefined" && window.innerWidth >= 768) ? 0 : -300 }}
         transition={{ type: "spring", bounce: 0, duration: 0.4 }}
         className="fixed md:sticky top-0 left-0 h-screen w-64 bg-stone-900 text-stone-300 flex flex-col z-30"
       >
