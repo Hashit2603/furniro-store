@@ -136,11 +136,7 @@ export default function CategoryPage({ params }: { params: Promise<{ slug: strin
                   
                   <div className="space-y-1.5 flex-grow">
                     <h3 className="text-[13px] font-medium text-stone-800 line-clamp-2 leading-snug">{product.title}</h3>
-                    <div className="flex items-center gap-2 pt-1">
-                      <span className="text-sm font-bold text-stone-900">₹{product.price}</span>
-                      <span className="text-xs text-stone-400 line-through">₹{product.originalPrice}</span>
-                      <span className="text-xs font-semibold text-[#8b5a2b]">Save {product.discount} off</span>
-                    </div>
+                    {/* Price removed as per request */}
                     <p className="text-[11px] text-[#c26d2b] mt-1">{product.offerText}</p>
                   </div>
                 </motion.div>

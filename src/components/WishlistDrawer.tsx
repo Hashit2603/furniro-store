@@ -109,7 +109,7 @@ export default function WishlistDrawer() {
                               <Trash2 className="w-4 h-4" />
                             </button>
                           </div>
-                          <p className="text-sm font-bold text-stone-900 mt-1">₹{item.price}</p>
+                          {/* Price removed */}
                         </div>
                         
                         <div className="mt-3">

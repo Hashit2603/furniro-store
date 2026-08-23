@@ -199,14 +199,7 @@ export default function ProductGrid() {
                           >
                             {product.title}
                           </motion.h3>
-                          <motion.div 
-                            layoutId={`price-container-${product.id}`}
-                            className="flex items-center gap-2 pt-1"
-                          >
-                            <span className="text-sm font-bold text-stone-900">₹{product.price}</span>
-                            <span className="text-xs text-stone-400 line-through">₹{product.originalPrice}</span>
-                            <span className="text-xs font-semibold text-[#8b5a2b]">Save {product.discount} off</span>
-                          </motion.div>
+                            {/* Price removed as per request */}
                           <motion.p 
                             layoutId={`offer-${product.id}`}
                             className="text-[11px] text-[#c26d2b] mt-1"
@@ -277,17 +270,7 @@ export default function ProductGrid() {
                     >
                       {selectedProduct.title}
                     </motion.h3>
-                    
-                    <motion.div 
-                      layoutId={`price-container-${selectedProduct.id}`}
-                      className="flex items-end gap-3"
-                    >
-                      <span className="text-3xl font-bold text-stone-900">₹{selectedProduct.price}</span>
-                      <span className="text-lg text-stone-400 line-through mb-1">₹{selectedProduct.originalPrice}</span>
-                      <span className="text-sm font-bold text-green-600 bg-green-50 px-2 py-1 rounded mb-1">
-                        {selectedProduct.discount} OFF
-                      </span>
-                    </motion.div>
+                                        {/* Price removed as per request */}
                     
                     <motion.p 
                       layoutId={`offer-${selectedProduct.id}`}

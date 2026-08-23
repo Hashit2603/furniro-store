@@ -34,7 +34,7 @@ export default function Home() {
           
           <div className="bg-[#e97d26] text-white px-8 py-3 rounded-md flex items-center gap-2">
             <span className="text-sm font-medium uppercase">Upto</span>
-            <span className="text-3xl font-bold">₹25,000*</span>
+            <span className="text-3xl font-bold">50%*</span>
             <span className="text-sm font-medium leading-tight">Instant<br/>Discount</span>
           </div>
           

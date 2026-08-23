@@ -100,7 +100,7 @@ export default function CartDrawer() {
                           </button>
                         </div>
                         <div className="flex items-end justify-between mt-2">
-                          <p className="font-bold text-stone-900">₹{item.price}</p>
+                          {/* Price removed as per request */}
                           <div className="flex items-center gap-3 bg-stone-50 border border-stone-200 rounded-md px-2 py-1">
                             <button 
                               onClick={() => updateQuantity(item.id, -1)}
@@ -127,13 +127,8 @@ export default function CartDrawer() {
             {/* Footer */}
             {cartItems.length > 0 && (
               <div className="border-t border-stone-100 p-6 bg-stone-50">
-                <div className="flex justify-between items-center mb-4">
-                  <span className="text-stone-600">Subtotal</span>
-                  <span className="text-xl font-bold text-stone-900">₹{cartSubtotal.toLocaleString('en-IN')}</span>
-                </div>
-                <p className="text-xs text-stone-500 mb-6">Shipping and taxes calculated at checkout.</p>
                 <button className="w-full py-4 bg-orange-600 hover:bg-orange-700 text-white font-bold rounded-lg transition-colors">
-                  Checkout Now
+                  Request Quote
                 </button>
               </div>
             )}

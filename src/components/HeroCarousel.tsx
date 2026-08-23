@@ -120,12 +120,7 @@ export default function HeroCarousel() {
               {slides[active].subtitle}
             </p>
             
-            <div>
-              <div className={`inline-block px-6 py-2 text-lg font-medium tracking-wide shadow-md ${slides[active].priceBg} ${slides[active].priceText}`}>
-                {slides[active].price}
-              </div>
-              <p className={`text-[10px] mt-2 opacity-70 ${slides[active].textColor}`}>*T&C Apply</p>
-            </div>
+            {/* Price removed as per request */}
           </div>
 
           {/* Right Content (Image) */}
