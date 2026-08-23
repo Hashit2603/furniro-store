@@ -21,7 +21,7 @@ export default function CinematicHero() {
       // --- ENTRANCE ANIMATION (Synchronized with CinematicIntro) ---
       const hasPlayed = sessionStorage.getItem('introPlayed') === 'true';
       // The logo zoom wrapper fades out starting around 3.9s. We overlap our entrance perfectly.
-      const delay = hasPlayed ? 0.1 : 3.9;
+      const delay = hasPlayed ? 0.1 : 1.5;
 
       const tl = gsap.timeline();
       
@@ -127,3 +127,4 @@ export default function CinematicHero() {
     </div>
   );
 }
+
