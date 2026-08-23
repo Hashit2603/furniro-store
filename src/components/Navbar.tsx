@@ -128,6 +128,12 @@ export default function Navbar() {
                 Bulk Order
               </Link>
             </motion.div>
+            <span className="w-px h-3 bg-stone-700"></span>
+            <motion.div whileTap={{ scale: 0.95 }}>
+              <Link href="/about" className="hover:text-white transition-colors flex items-center gap-1.5 uppercase">
+                About Us
+              </Link>
+            </motion.div>
           </div>
           
           <div className="flex items-center gap-6">
@@ -348,6 +354,7 @@ export default function Navbar() {
     </>
   );
 }
+
 
 
 
