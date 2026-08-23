@@ -13,7 +13,10 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Furniro | Premium Furniture",
+  title: {
+    template: '%s | Furniro',
+    default: 'Furniro | Premium Furniture',
+  },
   description: "Discover premium furniture for your living space, bedroom, and office. Shop high-quality sofas, beds, and dining sets.",
 };
 
