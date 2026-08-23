@@ -3,20 +3,33 @@
 import React from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
+import { 
+  Sofa, 
+  BedDouble, 
+  Coffee, 
+  DoorClosed, 
+  Tv, 
+  Armchair, 
+  Utensils, 
+  RockingChair,
+  Footprints, 
+  Library,
+  Sparkles
+} from 'lucide-react';
 
 const categories = [
-  { name: 'Latest Arrivals', icon: '✨', isNew: true },
-  { name: 'Sofas', icon: '🛋️' },
-  { name: 'Sofa Cum Beds', icon: '🛏️' },
-  { name: 'Coffee Tables', icon: '☕' },
-  { name: 'Beds', icon: '🛏️' },
-  { name: 'Wardrobes', icon: '🚪' },
-  { name: 'TV Units', icon: '📺' },
-  { name: 'Recliners', icon: '💺' },
-  { name: 'Dining Sets', icon: '🍽️' },
-  { name: 'Lounge Chairs', icon: '🪑' },
-  { name: 'Shoe Racks', icon: '👟' },
-  { name: 'Bookshelves', icon: '📚' },
+  { name: 'Latest Arrivals', icon: <Sparkles className="w-10 h-10 text-white" strokeWidth={1.5} />, isNew: true },
+  { name: 'Sofas', icon: <Sofa className="w-10 h-10 text-stone-700 group-hover:text-orange-600 transition-colors" strokeWidth={1.5} /> },
+  { name: 'Sofa Cum Beds', icon: <BedDouble className="w-10 h-10 text-stone-700 group-hover:text-orange-600 transition-colors" strokeWidth={1.5} /> },
+  { name: 'Coffee Tables', icon: <Coffee className="w-10 h-10 text-stone-700 group-hover:text-orange-600 transition-colors" strokeWidth={1.5} /> },
+  { name: 'Beds', icon: <BedDouble className="w-10 h-10 text-stone-700 group-hover:text-orange-600 transition-colors" strokeWidth={1.5} /> },
+  { name: 'Wardrobes', icon: <DoorClosed className="w-10 h-10 text-stone-700 group-hover:text-orange-600 transition-colors" strokeWidth={1.5} /> },
+  { name: 'TV Units', icon: <Tv className="w-10 h-10 text-stone-700 group-hover:text-orange-600 transition-colors" strokeWidth={1.5} /> },
+  { name: 'Recliners', icon: <Armchair className="w-10 h-10 text-stone-700 group-hover:text-orange-600 transition-colors" strokeWidth={1.5} /> },
+  { name: 'Dining Sets', icon: <Utensils className="w-10 h-10 text-stone-700 group-hover:text-orange-600 transition-colors" strokeWidth={1.5} /> },
+  { name: 'Lounge Chairs', icon: <RockingChair className="w-10 h-10 text-stone-700 group-hover:text-orange-600 transition-colors" strokeWidth={1.5} /> },
+  { name: 'Shoe Racks', icon: <Footprints className="w-10 h-10 text-stone-700 group-hover:text-orange-600 transition-colors" strokeWidth={1.5} /> },
+  { name: 'Bookshelves', icon: <Library className="w-10 h-10 text-stone-700 group-hover:text-orange-600 transition-colors" strokeWidth={1.5} /> },
 ];
 
 export default function CategoryRow() {
@@ -45,16 +58,14 @@ export default function CategoryRow() {
                 }}
                 className="flex flex-col items-center gap-3 cursor-pointer group"
               >
-                <div className={`w-24 h-24 rounded-full flex items-center justify-center text-3xl shadow-sm transition-transform duration-300 group-hover:-translate-y-2 group-hover:shadow-md ${category.isNew ? 'bg-[#503726] text-white' : 'bg-[#fff9f2]'}`}>
+                <div className={`w-24 h-24 rounded-full flex items-center justify-center shadow-sm transition-transform duration-300 group-hover:-translate-y-2 group-hover:shadow-md ${category.isNew ? 'bg-[#503726] text-white' : 'bg-[#fff9f2]'}`}>
                   {category.isNew ? (
-                    <div className="relative">
-                      <svg className="w-16 h-16 fill-transparent stroke-white stroke-2" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M12 2l2.4 2.4L18 4l.6 3.4 3.4.6L20 10.4 22 12l-2 1.6 2 2.4-3.4.6L18 20l-3.6-1.6L12 22l-2.4-3.6L6 20l-.6-3.4L2 16l2-1.6L2 12l2-1.6L2 8l3.4-.6L6 4l3.6 1.6L12 2z" />
-                      </svg>
-                      <span className="absolute inset-0 flex items-center justify-center font-bold text-xs">NEW</span>
+                    <div className="relative flex flex-col items-center justify-center">
+                      {category.icon}
+                      <span className="absolute -bottom-4 bg-orange-600 text-white text-[10px] font-bold px-2 py-0.5 rounded-full">NEW</span>
                     </div>
                   ) : (
-                    <span>{category.icon}</span>
+                    category.icon
                   )}
                 </div>
                 <span className="text-xs font-bold text-stone-600 text-center uppercase tracking-wider">{category.name}</span>
