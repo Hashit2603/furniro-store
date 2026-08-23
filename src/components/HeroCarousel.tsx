@@ -175,3 +175,4 @@ export default function HeroCarousel() {
     </motion.div>
   );
 }
+

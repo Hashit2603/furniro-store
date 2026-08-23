@@ -90,12 +90,9 @@ export default function CinematicShowcase() {
               
               <div className="order-2 md:order-1 flex flex-col items-start px-4 md:px-12">
                 <h3 className="text-4xl md:text-7xl font-serif font-bold mb-4 md:mb-6 leading-tight">{product.name}</h3>
-                <p className="text-stone-400 text-lg md:text-2xl font-light mb-6 md:mb-8 max-w-md">
+                <p className="text-stone-400 text-lg md:text-2xl font-light mb-6 md:mb-12 max-w-md">
                   {product.tagline}
                 </p>
-                <div className="text-2xl md:text-3xl font-bold tracking-tight mb-8 md:mb-12 text-stone-200">
-                  {product.price}
-                </div>
                 <Link href="/furniture" className="group flex items-center gap-4 text-sm font-bold uppercase tracking-widest hover:text-orange-500 transition-colors">
                   View Product
                   <span className="w-10 h-10 rounded-full border border-current flex items-center justify-center group-hover:bg-orange-500 group-hover:border-orange-500 group-hover:text-white transition-all">
