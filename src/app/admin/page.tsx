@@ -2,28 +2,17 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { DollarSign, ShoppingBag, Users, TrendingUp, Package, ArrowUpRight } from 'lucide-react';
+import { ShoppingBag, Users, Package, FileText } from 'lucide-react';
 
 const STATS = [
-  { label: 'Total Revenue', value: '₹12,45,000', increase: '+14%', icon: <DollarSign className="w-6 h-6 text-green-600" />, bg: 'bg-green-100' },
-  { label: 'Active Orders', value: '45', increase: '+5%', icon: <ShoppingBag className="w-6 h-6 text-orange-600" />, bg: 'bg-orange-100' },
-  { label: 'Total Customers', value: '1,240', increase: '+18%', icon: <Users className="w-6 h-6 text-blue-600" />, bg: 'bg-blue-100' },
-  { label: 'Conversion Rate', value: '3.2%', increase: '+1.2%', icon: <TrendingUp className="w-6 h-6 text-purple-600" />, bg: 'bg-purple-100' },
+  { label: 'Total Inquiries', value: '0', icon: <FileText className="w-6 h-6 text-green-600" />, bg: 'bg-green-100' },
+  { label: 'Active Quotes', value: '0', icon: <ShoppingBag className="w-6 h-6 text-orange-600" />, bg: 'bg-orange-100' },
+  { label: 'Total Customers', value: '0', icon: <Users className="w-6 h-6 text-blue-600" />, bg: 'bg-blue-100' },
+  { label: 'Total Products', value: '12', icon: <Package className="w-6 h-6 text-purple-600" />, bg: 'bg-purple-100' },
 ];
 
-const RECENT_ORDERS = [
-  { id: '#FUR-8991', customer: 'Rahul Sharma', date: 'Oct 24, 2023', total: '₹45,000', status: 'Processing' },
-  { id: '#FUR-8990', customer: 'Priya Patel', date: 'Oct 23, 2023', total: '₹12,500', status: 'Shipped' },
-  { id: '#FUR-8989', customer: 'Amit Kumar', date: 'Oct 23, 2023', total: '₹89,900', status: 'Delivered' },
-  { id: '#FUR-8988', customer: 'Sneha Gupta', date: 'Oct 22, 2023', total: '₹34,200', status: 'Processing' },
-  { id: '#FUR-8987', customer: 'Vikram Singh', date: 'Oct 21, 2023', total: '₹1,12,000', status: 'Delivered' },
-];
-
-const TOP_PRODUCTS = [
-  { name: 'Syltherine Lounge Chair', category: 'Chairs', sales: 124, revenue: '₹4,34,000' },
-  { name: 'Leviosa Minimalist Desk', category: 'Tables', sales: 98, revenue: '₹2,45,000' },
-  { name: 'Lolito Luxury Sofa', category: 'Sofas', sales: 45, revenue: '₹3,15,000' },
-];
+const RECENT_INQUIRIES: any[] = [];
+const TOP_PRODUCTS: any[] = [];
 
 export default function AdminDashboard() {
   return (
@@ -42,8 +31,8 @@ export default function AdminDashboard() {
             <div>
               <p className="text-sm font-medium text-stone-500 mb-1">{stat.label}</p>
               <h3 className="text-2xl font-bold text-stone-900">{stat.value}</h3>
-              <span className="text-xs font-medium text-green-600 flex items-center mt-2">
-                <ArrowUpRight className="w-3 h-3 mr-1" /> {stat.increase} this month
+              <span className="text-xs font-medium text-stone-400 flex items-center mt-2">
+                -- no data yet
               </span>
             </div>
             <div className={`w-12 h-12 rounded-lg flex items-center justify-center ${stat.bg}`}>
@@ -54,46 +43,47 @@ export default function AdminDashboard() {
       </div>
 
       <div className="grid lg:grid-cols-3 gap-6">
-        {/* Recent Orders */}
+        {/* Recent Inquiries */}
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4 }}
-          className="lg:col-span-2 bg-white rounded-xl shadow-sm border border-stone-200 overflow-hidden"
+          className="lg:col-span-2 bg-white rounded-xl shadow-sm border border-stone-200 overflow-hidden flex flex-col"
         >
           <div className="p-6 border-b border-stone-100 flex justify-between items-center">
-            <h2 className="text-lg font-bold text-stone-900">Recent Orders</h2>
-            <button className="text-sm font-medium text-orange-600 hover:text-orange-700">View All</button>
+            <h2 className="text-lg font-bold text-stone-900">Recent Inquiries</h2>
           </div>
-          <div className="overflow-x-auto">
+          <div className="overflow-x-auto flex-1">
             <table className="w-full text-left border-collapse">
               <thead>
                 <tr className="bg-stone-50 text-stone-500 text-xs uppercase tracking-wider">
-                  <th className="p-4 font-medium">Order ID</th>
+                  <th className="p-4 font-medium">Inquiry ID</th>
                   <th className="p-4 font-medium">Customer</th>
                   <th className="p-4 font-medium">Date</th>
-                  <th className="p-4 font-medium">Total</th>
                   <th className="p-4 font-medium">Status</th>
                 </tr>
               </thead>
               <tbody className="text-sm divide-y divide-stone-100">
-                {RECENT_ORDERS.map((order) => (
-                  <tr key={order.id} className="hover:bg-stone-50 transition-colors">
-                    <td className="p-4 font-medium text-stone-900">{order.id}</td>
-                    <td className="p-4 text-stone-600">{order.customer}</td>
-                    <td className="p-4 text-stone-500">{order.date}</td>
-                    <td className="p-4 text-stone-900 font-medium">{order.total}</td>
-                    <td className="p-4">
-                      <span className={`px-3 py-1 text-xs font-medium rounded-full ${
-                        order.status === 'Delivered' ? 'bg-green-100 text-green-700' :
-                        order.status === 'Processing' ? 'bg-orange-100 text-orange-700' :
-                        'bg-blue-100 text-blue-700'
-                      }`}>
-                        {order.status}
-                      </span>
+                {RECENT_INQUIRIES.length > 0 ? (
+                  RECENT_INQUIRIES.map((inquiry) => (
+                    <tr key={inquiry.id} className="hover:bg-stone-50 transition-colors">
+                      <td className="p-4 font-medium text-stone-900">{inquiry.id}</td>
+                      <td className="p-4 text-stone-600">{inquiry.customer}</td>
+                      <td className="p-4 text-stone-500">{inquiry.date}</td>
+                      <td className="p-4">
+                        <span className="px-3 py-1 text-xs font-medium rounded-full bg-stone-100 text-stone-700">
+                          {inquiry.status}
+                        </span>
+                      </td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr>
+                    <td colSpan={4} className="p-16 text-center text-stone-400 font-medium">
+                      No recent inquiries found.
                     </td>
                   </tr>
-                ))}
+                )}
               </tbody>
             </table>
           </div>
@@ -104,26 +94,30 @@ export default function AdminDashboard() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5 }}
-          className="bg-white rounded-xl shadow-sm border border-stone-200 overflow-hidden"
+          className="bg-white rounded-xl shadow-sm border border-stone-200 overflow-hidden flex flex-col"
         >
           <div className="p-6 border-b border-stone-100 flex justify-between items-center">
             <h2 className="text-lg font-bold text-stone-900">Top Products</h2>
           </div>
-          <div className="p-6 space-y-6">
-            {TOP_PRODUCTS.map((product, idx) => (
-              <div key={product.name} className="flex items-center gap-4">
-                <div className="w-12 h-12 bg-stone-100 rounded-lg flex items-center justify-center text-stone-400 shrink-0">
-                  <Package className="w-6 h-6" />
+          <div className="p-6 space-y-6 flex-1 flex flex-col">
+            {TOP_PRODUCTS.length > 0 ? (
+              TOP_PRODUCTS.map((product) => (
+                <div key={product.name} className="flex items-center gap-4">
+                  <div className="w-12 h-12 bg-stone-100 rounded-lg flex items-center justify-center text-stone-400 shrink-0">
+                    <Package className="w-6 h-6" />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <h4 className="text-sm font-bold text-stone-900 truncate">{product.name}</h4>
+                    <p className="text-xs text-stone-500">{product.category}</p>
+                  </div>
                 </div>
-                <div className="flex-1 min-w-0">
-                  <h4 className="text-sm font-bold text-stone-900 truncate">{product.name}</h4>
-                  <p className="text-xs text-stone-500">{product.category} • {product.sales} sales</p>
-                </div>
-                <div className="text-right shrink-0">
-                  <span className="block text-sm font-bold text-stone-900">{product.revenue}</span>
-                </div>
+              ))
+            ) : (
+              <div className="flex flex-col items-center justify-center h-full text-stone-400 gap-2 pb-6">
+                 <Package className="w-8 h-8 opacity-20" />
+                 <span className="text-sm font-medium">No product data yet.</span>
               </div>
-            ))}
+            )}
           </div>
         </motion.div>
       </div>
