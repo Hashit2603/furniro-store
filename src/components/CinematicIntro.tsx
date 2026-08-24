@@ -81,19 +81,6 @@ export default function CinematicIntro() {
           transition={{ duration: 1.8 }}
         />
       </motion.div>
-      
-      {/* Loading Spinner Over Doors */}
-      <motion.div 
-        className="absolute inset-0 flex items-center justify-center z-30 pointer-events-none"
-        initial={{ opacity: 1, scale: 1 }}
-        animate={{ opacity: step >= 1 ? 0 : 1, scale: step >= 1 ? 1.1 : 1 }}
-        transition={{ duration: 0.8, ease: "easeIn" }}
-      >
-         <div className="flex flex-col items-center gap-6 drop-shadow-2xl">
-            <div className="w-10 h-10 border-t-2 border-r-2 border-white animate-spin rounded-full"></div>
-            <span className="text-white text-sm tracking-[0.2em] uppercase font-light">Loading Showroom</span>
-         </div>
-      </motion.div>
     </motion.div>
   );
 }
