@@ -275,12 +275,18 @@ export default function CategoryPage({ params }: { params: Promise<{ slug: strin
                       >
                         Add to Cart
                       </button>
-                      <button 
+                      <motion.button 
+                        whileTap={{ scale: 0.9 }}
                         onClick={() => toggleWishlistItem(selectedProduct)}
-                        className="px-6 py-4 border border-stone-200 hover:border-stone-300 hover:bg-stone-50 text-stone-600 rounded-xl transition-all"
+                        className="px-6 py-4 border border-stone-200 hover:border-stone-300 hover:bg-stone-50 text-stone-600 rounded-xl transition-all flex items-center justify-center"
                       >
-                        <Heart className={`w-6 h-6 ${isInWishlist(selectedProduct.id) ? "fill-red-500 text-red-500" : ""}`} />
-                      </button>
+                        <motion.div
+                          animate={isInWishlist(selectedProduct.id) ? { scale: [1, 1.4, 0.9, 1.1, 1] } : { scale: 1 }}
+                          transition={{ duration: 0.4 }}
+                        >
+                          <Heart className={`w-6 h-6 transition-colors ${isInWishlist(selectedProduct.id) ? "fill-red-500 text-red-500" : ""}`} />
+                        </motion.div>
+                      </motion.button>
                     </motion.div>
   
                   </div>
