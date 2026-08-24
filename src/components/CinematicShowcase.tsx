@@ -79,13 +79,13 @@ export default function CinematicShowcase() {
 
   return (
     <section ref={sectionRef} className="w-full bg-stone-900 text-white overflow-hidden flex items-center relative" style={{ height: 'calc(100vh - 160px)' }}>
-      <div className="absolute top-8 left-8 md:top-12 md:left-12 z-20">
+      <div className="absolute top-6 left-6 md:top-10 md:left-12 z-20">
         <h2 className="text-sm font-bold uppercase tracking-widest text-orange-500">Curated Masterpieces</h2>
       </div>
       
       <div ref={scrollWrapperRef} className="flex h-full w-[300vw]">
         {SHOWCASE_PRODUCTS.map((product, i) => (
-          <div key={i} className="showcase-item w-screen h-full flex items-center justify-center p-4 md:p-8 relative">
+          <div key={i} className="showcase-item w-screen h-full flex items-center justify-center p-4 pt-24 md:p-8 md:pt-32 relative">
             <div className="max-w-6xl w-full grid md:grid-cols-2 gap-6 md:gap-12 items-center mt-12 md:mt-0">
               
               <div className="order-2 md:order-1 flex flex-col items-start px-4 md:px-12">
@@ -101,7 +101,7 @@ export default function CinematicShowcase() {
                 </Link>
               </div>
 
-              <div className="order-1 md:order-2 h-[35vh] sm:h-[45vh] md:h-[70vh] w-full relative rounded-2xl overflow-hidden shadow-2xl">
+              <div className="order-1 md:order-2 h-[35vh] sm:h-[45vh] md:h-[60vh] 2xl:h-[70vh] max-h-[700px] w-full relative rounded-2xl overflow-hidden shadow-2xl">
                 <img 
                   src={product.image} 
                   alt={product.name} 
@@ -116,4 +116,5 @@ export default function CinematicShowcase() {
     </section>
   );
 }
+
 
