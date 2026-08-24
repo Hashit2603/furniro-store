@@ -37,12 +37,23 @@ export default function CategoryPage({ params }: { params: Promise<{ slug: strin
   const categoryProducts = products.filter(p => p.categories.includes(categoryName));
 
   useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && selectedProduct) {
+        setSelectedProduct(null);
+      }
+    };
+
     if (selectedProduct) {
       document.body.style.overflow = 'hidden';
+      window.addEventListener('keydown', handleKeyDown);
     } else {
       document.body.style.overflow = 'unset';
     }
-    return () => { document.body.style.overflow = 'unset'; }
+
+    return () => {
+      document.body.style.overflow = 'unset';
+      window.removeEventListener('keydown', handleKeyDown);
+    };
   }, [selectedProduct]);
 
   return (

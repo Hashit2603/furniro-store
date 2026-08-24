@@ -43,12 +43,23 @@ export default function ProductGrid() {
   }, [activeCategory, searchQuery]);
 
   React.useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && selectedProduct) {
+        setSelectedProduct(null);
+      }
+    };
+
     if (selectedProduct) {
       document.body.style.overflow = 'hidden';
+      window.addEventListener('keydown', handleKeyDown);
     } else {
       document.body.style.overflow = 'unset';
     }
-    return () => { document.body.style.overflow = 'unset'; }
+
+    return () => {
+      document.body.style.overflow = 'unset';
+      window.removeEventListener('keydown', handleKeyDown);
+    };
   }, [selectedProduct]);
 
   return (
