@@ -1,15 +1,13 @@
-import Navbar from "@/components/Navbar";
+﻿import Navbar from "@/components/Navbar";
 import CategoryRow from "@/components/CategoryRow";
 import ProductGrid from "@/components/ProductGrid";
 import Footer from "@/components/Footer";
-import CinematicIntro from "@/components/CinematicIntro";
 import CinematicHero from "@/components/CinematicHero";
 import CinematicShowcase from "@/components/CinematicShowcase";
 
 export default function Home() {
   return (
     <div className="min-h-screen bg-white text-stone-900 font-sans selection:bg-orange-200">
-      <CinematicIntro />
       <Navbar />
 
       <main className="w-full overflow-hidden">
