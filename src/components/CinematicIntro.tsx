@@ -69,6 +69,17 @@ function DoorScene({
   const leftDoorRef = useRef<THREE.Group>(null);
   const rightDoorRef = useRef<THREE.Group>(null);
   const lightRevealRef = useRef<THREE.PointLight>(null);
+
+  const onRevealRef = useRef(onReveal);
+  const onFadeRef = useRef(onFade);
+  const onCompleteRef = useRef(onComplete);
+
+  // Keep refs up to date without triggering useEffect
+  useLayoutEffect(() => {
+    onRevealRef.current = onReveal;
+    onFadeRef.current = onFade;
+    onCompleteRef.current = onComplete;
+  }, [onReveal, onFade, onComplete]);
   
   useEffect(() => {
     if (!cameraRef.current || !leftDoorRef.current || !rightDoorRef.current || !lightRevealRef.current) return;
@@ -80,7 +91,7 @@ function DoorScene({
     lightRevealRef.current.intensity = 0;
 
     const tl = gsap.timeline({
-      onComplete: onComplete
+      onComplete: () => onCompleteRef.current()
     });
 
     // Phase 1: Subtle anticipation (slow dolly in)
@@ -91,7 +102,7 @@ function DoorScene({
     }, 0);
 
     // Phase 2: Doors open & light spills
-    tl.call(() => onReveal(), [], 1.5);
+    tl.call(() => onRevealRef.current(), [], 1.5);
     
     tl.to([leftDoorRef.current.rotation], {
       y: Math.PI / 1.7, // open outwards
@@ -120,10 +131,10 @@ function DoorScene({
     }, 2.5);
 
     // Fade out the entire canvas before it abruptly unmounts
-    tl.call(() => onFade(), [], 3.5);
+    tl.call(() => onFadeRef.current(), [], 3.5);
 
     return () => { tl.kill(); };
-  }, [onComplete, onReveal, onFade]);
+  }, []); // Run absolutely only once on mount
 
   const wallMaterial = new THREE.MeshStandardMaterial({
     color: "#050505",
@@ -220,4 +231,5 @@ export default function CinematicIntro() {
     </motion.div>
   );
 }
+
 
