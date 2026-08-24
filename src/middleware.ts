@@ -2,25 +2,18 @@ import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
 export function middleware(req: NextRequest) {
+  // Only protect /admin routes
   if (req.nextUrl.pathname.startsWith('/admin')) {
-    const basicAuth = req.headers.get('authorization');
+    const adminAuthCookie = req.cookies.get('admin_auth');
     
-    if (basicAuth) {
-      const authValue = basicAuth.split(' ')[1];
-      // atob is available in edge runtime
-      const [user, pwd] = atob(authValue).split(':');
-
-      if (user === 'admin' && pwd === 'admin@123') {
-        return NextResponse.next();
-      }
+    // If authenticated, allow the request to proceed
+    if (adminAuthCookie && adminAuthCookie.value === 'authenticated') {
+      return NextResponse.next();
     }
 
-    return new NextResponse('Authentication required', {
-      status: 401,
-      headers: {
-        'WWW-Authenticate': 'Basic realm="Admin Area"',
-      },
-    });
+    // Otherwise, redirect to the custom admin login page
+    const loginUrl = new URL('/admin-login', req.url);
+    return NextResponse.redirect(loginUrl);
   }
   
   return NextResponse.next();
