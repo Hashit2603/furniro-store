@@ -4,7 +4,6 @@ import React, { useMemo, useState } from 'react';
 import { Heart, X, Truck, Shield, RotateCcw } from 'lucide-react';
 import { useCart } from '@/context/CartContext';
 import { useWishlist } from '@/context/WishlistContext';
-import ProductViewer3D from './ProductViewer3D';
 import { useCategory } from '@/context/CategoryContext';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -20,7 +19,6 @@ export default function ProductGrid() {
   
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [animatingHeartId, setAnimatingHeartId] = useState<number | null>(null);
-  const [viewMode, setViewMode] = useState<'2d' | '3d'>('2d');
 
   const handleWishlistClick = (e: React.MouseEvent, product: Product) => {
     e.stopPropagation();
@@ -136,7 +134,7 @@ export default function ProductGrid() {
                         transition={{ layout: { type: "spring", damping: 25, stiffness: 200 } }}
                         key={product.id} 
                         className="group cursor-pointer flex flex-col"
-                        onClick={() => { setSelectedProduct(product); setViewMode('2d'); }}
+                        onClick={() => setSelectedProduct(product)}
                       >
                         {/* Image Box */}
                         <motion.div 
@@ -260,43 +258,17 @@ export default function ProductGrid() {
                   <X className="w-5 h-5" />
                 </button>
 
-                                                {/* Left: Image (takes half width on desktop) */}
+                                {/* Left: Image (takes half width on desktop) */}
                 <motion.div 
                   layoutId={`image-container-${selectedProduct.id}`}
-                  className="w-full md:w-1/2 h-64 md:h-full relative bg-stone-100 shrink-0 flex flex-col"
+                  className="w-full md:w-1/2 h-64 md:h-full relative bg-stone-100 shrink-0"
                 >
-                  {viewMode === '2d' ? (
-                    <motion.img 
-                      layoutId={`image-${selectedProduct.id}`}
-                      src={selectedProduct.imageUrl}
-                      alt={selectedProduct.title}
-                      className="w-full h-full object-cover"
-                    />
-                  ) : (
-                    <div className="w-full h-full">
-                      <ProductViewer3D color="#d4c5b9" />
-                    </div>
-                  )}
-
-                  {/* 3D Toggle Button */}
-                  <div className="absolute bottom-4 left-0 right-0 flex justify-center z-30">
-                    <div className="bg-white/80 backdrop-blur-md p-1 rounded-full flex gap-1 shadow-md">
-                      <button 
-                        onClick={() => setViewMode('2d')}
-                        className={`px-4 py-1.5 rounded-full text-sm font-bold transition-all ${viewMode === '2d' ? 'bg-orange-600 text-white' : 'text-stone-600 hover:bg-stone-200'}`}
-                      >
-                        2D Image
-                      </button>
-                      <button 
-                        onClick={() => setViewMode('3d')}
-                        className={`px-4 py-1.5 rounded-full text-sm font-bold transition-all flex items-center gap-2 ${viewMode === '3d' ? 'bg-orange-600 text-white' : 'text-stone-600 hover:bg-stone-200'}`}
-                      >
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
-                        3D View
-                      </button>
-                    </div>
-                  </div>
-
+                  <motion.img 
+                    layoutId={`image-${selectedProduct.id}`}
+                    src={selectedProduct.imageUrl}
+                    alt={selectedProduct.title}
+                    className="w-full h-full object-cover"
+                  />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent md:hidden pointer-events-none" />
                 </motion.div>
 
