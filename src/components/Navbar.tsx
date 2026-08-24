@@ -25,10 +25,37 @@ export default function Navbar() {
 
   const [isAnimatingLogo, setIsAnimatingLogo] = useState(false);
 
-  // Clear search when clicking a category
+    // Sync active category with URL if on a category page
+  React.useEffect(() => {
+    if (pathname.startsWith('/category/')) {
+      const slug = pathname.split('/').pop() || '';
+      const catName = slug
+        .split('-')
+        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(' ');
+      
+      const matched = NAV_CATEGORIES.find(c => c.toLowerCase() === catName.toLowerCase());
+      if (matched) {
+        setActiveCategory(matched);
+      }
+    } else if (pathname === '/') {
+      // Optional: don't clear it here so homepage filter persists, 
+      // but usually we might want to clear it if coming back home without a specific click.
+    }
+  }, [pathname, setActiveCategory]);
+
+  // Navigate to category page if not on home, or just filter if on home
   const handleCategoryClick = (cat: string | null) => {
     setActiveCategory(cat);
-    if (cat) setSearchQuery(''); // clear search when navigating to a specific category
+    if (cat) {
+      setSearchQuery('');
+      if (pathname !== '/') {
+        const slug = cat.toLowerCase().replace(/\s+/g, '-');
+        router.push(`/category/${slug}`);
+      }
+    } else if (pathname !== '/') {
+      router.push('/');
+    }
   };
 
   const handleLogoClick = (e: React.MouseEvent) => {
@@ -354,6 +381,7 @@ export default function Navbar() {
     </>
   );
 }
+
 
 
 
