@@ -1,10 +1,177 @@
 "use client";
 
-import React, { useEffect, useState, useLayoutEffect } from 'react';
-import { motion } from 'framer-motion';
+import React, { useEffect, useRef, useState, useLayoutEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Canvas, useFrame } from '@react-three/fiber';
+import { PerspectiveCamera, Environment } from '@react-three/drei';
+import * as THREE from 'three';
+import gsap from 'gsap';
+
+function LuxuriousDoor({ isLeft }: { isLeft: boolean }) {
+  const doorMaterial = new THREE.MeshStandardMaterial({
+    color: "#111111",
+    roughness: 0.1,
+    metalness: 0.6,
+  });
+  const panelMaterial = new THREE.MeshStandardMaterial({
+    color: "#0a0a0a",
+    roughness: 0.3,
+    metalness: 0.3,
+  });
+  const handleMaterial = new THREE.MeshStandardMaterial({
+    color: "#d4af37", // Elegant brass/gold
+    roughness: 0.2,
+    metalness: 1.0,
+  });
+
+  const signX = isLeft ? 1 : -1;
+
+  return (
+    <group>
+      {/* Main Door Frame */}
+      <mesh position={[signX * 1.25, 3.5, 0]} castShadow receiveShadow material={doorMaterial}>
+        <boxGeometry args={[2.5, 9, 0.2]} />
+      </mesh>
+      
+      {/* Decorative Inner Panels */}
+      <mesh position={[signX * 1.25, 6, 0.11]} castShadow receiveShadow material={panelMaterial}>
+        <boxGeometry args={[1.8, 3.5, 0.05]} />
+      </mesh>
+      <mesh position={[signX * 1.25, 1.5, 0.11]} castShadow receiveShadow material={panelMaterial}>
+        <boxGeometry args={[1.8, 4, 0.05]} />
+      </mesh>
+
+      {/* Elegant Long Handle */}
+      <mesh position={[signX * 2.2, 3.5, 0.2]} castShadow material={handleMaterial}>
+        <cylinderGeometry args={[0.015, 0.015, 2.5, 16]} />
+      </mesh>
+      {/* Handle mounts */}
+      <mesh position={[signX * 2.2, 4.6, 0.15]} castShadow material={handleMaterial} rotation={[Math.PI / 2, 0, 0]}>
+        <cylinderGeometry args={[0.015, 0.015, 0.1, 16]} />
+      </mesh>
+      <mesh position={[signX * 2.2, 2.4, 0.15]} castShadow material={handleMaterial} rotation={[Math.PI / 2, 0, 0]}>
+        <cylinderGeometry args={[0.015, 0.015, 0.1, 16]} />
+      </mesh>
+    </group>
+  );
+}
+
+function DoorScene({  
+  onReveal, 
+  onFade, 
+  onComplete 
+}: { 
+  onReveal: () => void; 
+  onFade: () => void; 
+  onComplete: () => void; 
+}) {
+  const cameraRef = useRef<THREE.PerspectiveCamera>(null);
+  const leftDoorRef = useRef<THREE.Group>(null);
+  const rightDoorRef = useRef<THREE.Group>(null);
+  const lightRevealRef = useRef<THREE.PointLight>(null);
+  
+  useEffect(() => {
+    if (!cameraRef.current || !leftDoorRef.current || !rightDoorRef.current || !lightRevealRef.current) return;
+    
+    // Initial State
+    cameraRef.current.position.set(0, 1.5, 14);
+    leftDoorRef.current.rotation.y = 0;
+    rightDoorRef.current.rotation.y = 0;
+    lightRevealRef.current.intensity = 0;
+
+    const tl = gsap.timeline({
+      onComplete: onComplete
+    });
+
+    // Phase 1: Subtle anticipation (slow dolly in)
+    tl.to(cameraRef.current.position, {
+      z: 11,
+      duration: 2.0,
+      ease: "power1.inOut"
+    }, 0);
+
+    // Phase 2: Doors open & light spills
+    tl.call(() => onReveal(), [], 1.5);
+    
+    tl.to([leftDoorRef.current.rotation], {
+      y: Math.PI / 1.7, // open outwards
+      duration: 2.8,
+      ease: "power3.inOut"
+    }, 1.5);
+    
+    tl.to([rightDoorRef.current.rotation], {
+      y: -Math.PI / 1.7,
+      duration: 2.8,
+      ease: "power3.inOut"
+    }, 1.5);
+
+    // Light bursts through
+    tl.to(lightRevealRef.current, {
+      intensity: 15,
+      duration: 1.5,
+      ease: "power2.in"
+    }, 1.5);
+
+    // Phase 3: Camera pushes through the door gap
+    tl.to(cameraRef.current.position, {
+      z: -3,
+      duration: 2.0,
+      ease: "power2.inOut"
+    }, 2.5);
+
+    // Fade out the entire canvas before it abruptly unmounts
+    tl.call(() => onFade(), [], 3.5);
+
+    return () => { tl.kill(); };
+  }, [onComplete, onReveal, onFade]);
+
+  const wallMaterial = new THREE.MeshStandardMaterial({
+    color: "#050505",
+    roughness: 0.9,
+  });
+
+  return (
+    <>
+      <PerspectiveCamera ref={cameraRef} makeDefault fov={40} />
+      
+      {/* Lighting */}
+      <ambientLight intensity={0.05} />
+      <spotLight position={[0, 6, 15]} angle={0.5} penumbra={0.8} intensity={2} castShadow />
+      
+      {/* The cinematic light that bursts from behind the door */}
+      <pointLight ref={lightRevealRef} position={[0, 2, -2]} color="#ffffff" intensity={0} distance={30} decay={1.5} />
+      
+      {/* Left Door */}
+      <group ref={leftDoorRef} position={[-2.5, 0, 0]}>
+        <LuxuriousDoor isLeft={true} />
+      </group>
+
+      {/* Right Door */}
+      <group ref={rightDoorRef} position={[2.5, 0, 0]}>
+        <LuxuriousDoor isLeft={false} />
+      </group>
+      
+      {/* Corridor Walls to block peripheral vision */}
+      <mesh position={[-5, 3.5, 5]} rotation={[0, Math.PI / 2, 0]} material={wallMaterial} receiveShadow>
+        <planeGeometry args={[20, 20]} />
+      </mesh>
+      <mesh position={[5, 3.5, 5]} rotation={[0, -Math.PI / 2, 0]} material={wallMaterial} receiveShadow>
+        <planeGeometry args={[20, 20]} />
+      </mesh>
+      <mesh position={[0, 8, 5]} rotation={[Math.PI / 2, 0, 0]} material={wallMaterial} receiveShadow>
+        <planeGeometry args={[20, 20]} />
+      </mesh>
+      <mesh position={[0, -1, 5]} rotation={[-Math.PI / 2, 0, 0]} material={wallMaterial} receiveShadow>
+        <planeGeometry args={[20, 20]} />
+      </mesh>
+      
+      <Environment preset="night" />
+    </>
+  );
+}
 
 export default function CinematicIntro() {
-  const [step, setStep] = useState(0); 
+  const [stage, setStage] = useState(0); 
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -13,87 +180,43 @@ export default function CinematicIntro() {
     const hasPlayed = sessionStorage.getItem('introPlayed');
 
     if (prefersReducedMotion || hasPlayed) {
-      setStep(3);
+      setStage(3);
       return;
     }
-
-    const t1 = setTimeout(() => setStep(1), 1500); // Doors start opening
-    const t3 = setTimeout(() => {
-      setStep(3); // Unmount after doors finish opening
-      sessionStorage.setItem('introPlayed', 'true');
-    }, 3500); 
-
-    return () => {
-      clearTimeout(t1);
-      clearTimeout(t3);
-    };
   }, []);
-  
-  if (step === 3) return null;
+
+  const handleSequenceComplete = () => {
+    setStage(3);
+    sessionStorage.setItem('introPlayed', 'true');
+  };
+
+  if (stage === 3 || !mounted) return null;
 
   return (
     <motion.div 
-      className="fixed inset-0 z-[999999] flex items-center justify-center bg-transparent pointer-events-none"
+      className={`fixed inset-0 z-[999999] ${stage >= 1 ? 'pointer-events-none' : 'pointer-events-auto'}`}
       initial={{ opacity: 1 }}
-      animate={{ opacity: step >= 1 ? 0 : 1 }}
-      transition={{ delay: 2.5, duration: 0.8, ease: "easeOut" }} 
+      animate={{ opacity: stage === 2 ? 0 : 1 }}
+      transition={{ duration: 1.0, ease: "easeInOut" }} 
     >
-      {/* Left Door */}
-      <motion.div 
-        className="absolute left-0 top-0 w-1/2 h-full overflow-hidden bg-stone-900 border-r border-stone-800 shadow-[20px_0_50px_rgba(0,0,0,0.5)] z-20"
-        initial={{ x: 0 }}
-        animate={{ x: step >= 1 ? '-100%' : 0 }}
-        transition={{ duration: 1.8, ease: [0.76, 0, 0.24, 1], delay: 0.1 }}
-      >
-        <video 
-          autoPlay muted playsInline loop
-          poster="/images/generated/luxury_showroom_doors.jpg"
-          className="absolute left-0 top-0 w-[100vw] max-w-[100vw] h-full object-cover"
-        >
-          <source src="/videos/intro-desktop.mp4" type="video/mp4" />
-        </video>
-        <motion.div 
-          className="absolute inset-0 bg-black"
-          initial={{ opacity: 0.3 }}
-          animate={{ opacity: step >= 1 ? 0 : 0.3 }}
-          transition={{ duration: 1.8 }}
-        />
-      </motion.div>
-
-      {/* Right Door */}
-      <motion.div 
-        className="absolute right-0 top-0 w-1/2 h-full overflow-hidden bg-stone-900 border-l border-stone-800 shadow-[-20px_0_50px_rgba(0,0,0,0.5)] z-20"
-        initial={{ x: 0 }}
-        animate={{ x: step >= 1 ? '100%' : 0 }}
-        transition={{ duration: 1.8, ease: [0.76, 0, 0.24, 1], delay: 0.1 }}
-      >
-        <video 
-          autoPlay muted playsInline loop
-          poster="/images/generated/luxury_showroom_doors.jpg"
-          className="absolute right-0 top-0 w-[100vw] max-w-[100vw] h-full object-cover"
-        >
-          <source src="/videos/intro-desktop.mp4" type="video/mp4" />
-        </video>
-        <motion.div 
-          className="absolute inset-0 bg-black"
-          initial={{ opacity: 0.3 }}
-          animate={{ opacity: step >= 1 ? 0 : 0.3 }}
-          transition={{ duration: 1.8 }}
-        />
-      </motion.div>
-      
-      {/* Loading Spinner Over Doors */}
-      <motion.div 
-        className="absolute inset-0 flex items-center justify-center z-30 pointer-events-none"
-        initial={{ opacity: 1, scale: 1 }}
-        animate={{ opacity: step >= 1 ? 0 : 1, scale: step >= 1 ? 1.1 : 1 }}
-        transition={{ duration: 0.8, ease: "easeIn" }}
-      >
-         <div className="flex flex-col items-center gap-6 drop-shadow-2xl">
-            <div className="w-10 h-10 border-t-2 border-r-2 border-white animate-spin rounded-full"></div>
-            <span className="text-white text-sm tracking-[0.2em] uppercase font-light">Loading Showroom</span>
-         </div>
-      </motion.div>
+       {/* Background that fades out to reveal the real website behind the 3D doors */}
+       <div 
+        className="absolute inset-0 bg-stone-950 transition-opacity duration-[1500ms] ease-in-out" 
+        style={{ opacity: stage >= 1 ? 0 : 1 }} 
+       />
+       
+       <Canvas 
+        shadows 
+        gl={{ alpha: true, antialias: true }} 
+        camera={{ position: [0, 1.5, 14], fov: 40 }}
+        className="relative z-10"
+       >
+         <DoorScene 
+           onReveal={() => setStage(1)} 
+           onFade={() => setStage(2)} 
+           onComplete={handleSequenceComplete} 
+         />
+       </Canvas>
     </motion.div>
   );
 }
